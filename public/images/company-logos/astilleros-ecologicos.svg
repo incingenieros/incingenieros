@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="180" height="50" viewBox="0 0 180 50" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="gradient9" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2E7D32"/>
+      <stop offset="100%" stop-color="#66BB6A"/>
+    </linearGradient>
+  </defs>
+  <g fill="none" fill-rule="evenodd">
+    <path d="M30 10l15 15-15 15-15-15 15-15z" fill="url(#gradient9)"/>
+    <path d="M30 20l5 5-5 5-5-5 5-5z" fill="#FFFFFF" fill-opacity="0.3"/>
+    <path d="M55 15c5.523 0 10 4.477 10 10s-4.477 10-10 10-10-4.477-10-10 4.477-10 10-10z" fill="#2E7D32"/>
+    <path d="M55 20l5 10H50l5-10z" fill="#FFFFFF" fill-opacity="0.3"/>
+    <text font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#2E7D32">
+      <tspan x="90" y="25">AES</tspan>
+    </text>
+    <text font-family="Arial, sans-serif" font-size="10" fill="#2E7D32">
+      <tspan x="90" y="40">Astilleros Ecológicos</tspan>
+    </text>
+  </g>
+</svg>

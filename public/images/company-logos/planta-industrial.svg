@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="180" height="50" viewBox="0 0 180 50" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="gradient7" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#388E3C"/>
+      <stop offset="100%" stop-color="#81C784"/>
+    </linearGradient>
+  </defs>
+  <g fill="none" fill-rule="evenodd">
+    <path d="M20 30V15h10v5h10v5h10v5H20z" fill="url(#gradient7)"/>
+    <path d="M25 30v5M35 30v5M45 30v5" stroke="#388E3C" stroke-width="2"/>
+    <path d="M60 15v20M65 15v20M70 15v20" stroke="#388E3C" stroke-width="2"/>
+    <path d="M55 25h20" stroke="#388E3C" stroke-width="2"/>
+    <text font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#388E3C">
+      <tspan x="90" y="25">PIM</tspan>
+    </text>
+    <text font-family="Arial, sans-serif" font-size="10" fill="#388E3C">
+      <tspan x="90" y="40">Planta Industrial Marítima</tspan>
+    </text>
+  </g>
+</svg>

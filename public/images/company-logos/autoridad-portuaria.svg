@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="180" height="50" viewBox="0 0 180 50" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="gradient5" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#D32F2F"/>
+      <stop offset="100%" stop-color="#FF5252"/>
+    </linearGradient>
+  </defs>
+  <g fill="none" fill-rule="evenodd">
+    <path d="M40 10L20 40h40L40 10z" fill="url(#gradient5)"/>
+    <path d="M40 20c2.76 0 5 2.24 5 5s-2.24 5-5 5-5-2.24-5-5 2.24-5 5-5z" fill="#FFFFFF"/>
+    <path d="M60 25h10" stroke="#D32F2F" stroke-width="3"/>
+    <path d="M65 20v10" stroke="#D32F2F" stroke-width="3"/>
+    <text font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#D32F2F">
+      <tspan x="90" y="25">APV</tspan>
+    </text>
+    <text font-family="Arial, sans-serif" font-size="10" fill="#D32F2F">
+      <tspan x="90" y="40">Autoridad Portuaria</tspan>
+    </text>
+  </g>
+</svg>

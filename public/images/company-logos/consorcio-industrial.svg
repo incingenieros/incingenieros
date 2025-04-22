@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="180" height="50" viewBox="0 0 180 50" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="gradient3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#5D4037"/>
+      <stop offset="100%" stop-color="#8D6E63"/>
+    </linearGradient>
+  </defs>
+  <g fill="none" fill-rule="evenodd">
+    <path d="M20 15h10v20H20z" fill="url(#gradient3)"/>
+    <path d="M35 15h10v20H35z" fill="#5D4037"/>
+    <path d="M50 15h10v20H50z" fill="#8D6E63"/>
+    <path d="M65 15h10v20H65z" fill="#5D4037"/>
+    <text font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#5D4037">
+      <tspan x="90" y="25">CIM</tspan>
+    </text>
+    <text font-family="Arial, sans-serif" font-size="10" fill="#5D4037">
+      <tspan x="90" y="40">Consorcio Industrial</tspan>
+    </text>
+    <path d="M15 40h65" stroke="#5D4037" stroke-width="2"/>
+  </g>
+</svg>

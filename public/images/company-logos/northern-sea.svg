@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="180" height="50" viewBox="0 0 180 50" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="gradient4" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#0D47A1"/>
+      <stop offset="100%" stop-color="#2196F3"/>
+    </linearGradient>
+  </defs>
+  <g fill="none" fill-rule="evenodd">
+    <path d="M20 15c11.046 0 20 4.477 20 10s-8.954 10-20 10-20-4.477-20-10 8.954-10 20-10z" fill="url(#gradient4)"/>
+    <path d="M50 15l5 10-5 10-5-10 5-10z" fill="#0D47A1"/>
+    <path d="M60 15l5 10-5 10-5-10 5-10z" fill="#2196F3"/>
+    <path d="M70 15l5 10-5 10-5-10 5-10z" fill="#0D47A1"/>
+    <text font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#FFFFFF">
+      <tspan x="90" y="25">NSS</tspan>
+    </text>
+    <text font-family="Arial, sans-serif" font-size="10" fill="#0D47A1">
+      <tspan x="90" y="40">Northern Sea Shipyards</tspan>
+    </text>
+  </g>
+</svg>

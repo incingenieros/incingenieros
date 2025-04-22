@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="180" height="50" viewBox="0 0 180 50" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="gradient8" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#303F9F"/>
+      <stop offset="100%" stop-color="#7986CB"/>
+    </linearGradient>
+  </defs>
+  <g fill="none" fill-rule="evenodd">
+    <path d="M25 15h30v20H25z" fill="url(#gradient8)"/>
+    <path d="M30 20h20v10H30z" fill="#FFFFFF" fill-opacity="0.3"/>
+    <path d="M35 25h10" stroke="#FFFFFF" stroke-width="1"/>
+    <path d="M40 20v10" stroke="#FFFFFF" stroke-width="1"/>
+    <path d="M60 15l5 10-5 10" stroke="#303F9F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M70 15l-5 10 5 10" stroke="#303F9F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <text font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#303F9F">
+      <tspan x="90" y="25">BVN</tspan>
+    </text>
+    <text font-family="Arial, sans-serif" font-size="10" fill="#303F9F">
+      <tspan x="90" y="40">Bureau Veritas Naval</tspan>
+    </text>
+  </g>
+</svg>

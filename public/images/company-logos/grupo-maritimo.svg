@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="180" height="50" viewBox="0 0 180 50" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="gradient2" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00796B"/>
+      <stop offset="100%" stop-color="#4DB6AC"/>
+    </linearGradient>
+  </defs>
+  <g fill="none" fill-rule="evenodd">
+    <path d="M20 15c0-2.76 2.24-5 5-5h30c2.76 0 5 2.24 5 5v20c0 2.76-2.24 5-5 5H25c-2.76 0-5-2.24-5-5V15z" fill="url(#gradient2)"/>
+    <path d="M30 15c5.523 0 10 4.477 10 10s-4.477 10-10 10-10-4.477-10-10 4.477-10 10-10z" fill="#FFFFFF" fill-opacity="0.3"/>
+    <path d="M70 15l10 20H60l10-20z" fill="#00796B"/>
+    <text font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#FFFFFF">
+      <tspan x="90" y="25">GMM</tspan>
+    </text>
+    <text font-family="Arial, sans-serif" font-size="10" fill="#00796B">
+      <tspan x="90" y="40">Grupo Marítimo</tspan>
+    </text>
+  </g>
+</svg>

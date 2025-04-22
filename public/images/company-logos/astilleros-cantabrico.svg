@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="180" height="50" viewBox="0 0 180 50" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1E5799"/>
+      <stop offset="100%" stop-color="#207cca"/>
+    </linearGradient>
+  </defs>
+  <g fill="none" fill-rule="evenodd">
+    <path d="M30 10l15 30H15L30 10z" fill="url(#gradient1)"/>
+    <path d="M60 10l-5 10 5 10 5-10-5-10z" fill="#1E5799"/>
+    <path d="M75 10v30h5V10h-5z" fill="#1E5799"/>
+    <text font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#FFFFFF">
+      <tspan x="90" y="25">ANC</tspan>
+    </text>
+    <text font-family="Arial, sans-serif" font-size="10" fill="#1E5799">
+      <tspan x="90" y="40">Astilleros Navales</tspan>
+    </text>
+  </g>
+</svg>
