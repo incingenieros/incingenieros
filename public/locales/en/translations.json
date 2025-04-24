@@ -1,0 +1,24 @@
+{
+  "nav": {
+    "home": "Home",
+    "experience": "Experience",
+    "consulting": "Consulting",
+    "industrial": "Industrial",
+    "naval": "Naval",
+    "success": "Success",
+    "contact": "Contact"
+  },
+  "hero": {
+    "title": "Eng. Francisco José Arrazola Méndez",
+    "subtitle": "Naval and Ocean Engineering",
+    "description": "Over 30 years of experience in the naval and offshore sector, offering specialized consulting services and engineering solutions for maritime and industrial projects.",
+    "cta_primary": "View projects",
+    "cta_secondary": "Contact"
+  },
+  "footer": {
+    "copyright": "© {year} Eng. Francisco José Arrazola Méndez",
+    "address": "Carrer d'Avall, 2, 43812 Bràfim, Tarragona, Spain",
+    "email": "info@incigenieros.com",
+    "phone": "+34 123 456 789"
+  }
+}
