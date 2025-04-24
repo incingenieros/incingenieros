@@ -4,7 +4,7 @@ import "./globals.css";
 import { Inter } from "next/font/google";
 import localFont from "next/font/local";
 
-import Header from "@/components/ui/header";
+import ClientLayout from "@/components/client-layout";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -54,12 +54,16 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${nacelle.variable} bg-gray-950 font-inter text-base text-gray-200 antialiased`}
       >
-        <div className="flex min-h-screen flex-col overflow-hidden supports-[overflow:clip]:overflow-clip">
-          <Header />
-          <main className="pt-4">
-            {children}
-          </main>
-        </div>
+        <ClientLayout>
+          <div className="flex min-h-screen flex-col overflow-hidden supports-[overflow:clip]:overflow-clip">
+            <main className="pt-4">
+              {children}
+            </main>
+          </div>
+        </ClientLayout>
+        {/* Scripts personalizados para navegación y funcionalidades */}
+        <script src="/js/custom-navigation.js" defer></script>
+        <script src="/js/expand-card.js" defer></script>
       </body>
     </html>
   );
