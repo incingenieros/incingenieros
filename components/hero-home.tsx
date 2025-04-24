@@ -89,7 +89,7 @@ export default function HeroHome() {
               {/* Contadores animados superpuestos en la parte izquierda */}
               <div 
                 className="absolute inset-y-0 left-6 flex items-center justify-start z-40 w-56 md:block"
-                style={{ top: '35%', transform: 'translateY(-50%)' }}
+                style={{ top: '48%', transform: 'translateY(-50%)' }}
                 data-aos="fade-right"
                 data-aos-delay="300"
               >
