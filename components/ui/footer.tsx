@@ -182,6 +182,21 @@ export default function Footer() {
             </div>
           </div>
         </div>
+        
+        {/* KitDigital logo a todo el ancho */}
+        <div className="py-6 border-t border-gray-800 mt-6">
+          <div className="w-full max-w-6xl mx-auto" style={{ height: '100px' }}>
+            <Image 
+              src="/images/footer/footer/KitDigital.png" 
+              alt="Kit Digital" 
+              width={1200} 
+              height={200} 
+              className="w-full h-auto object-contain" 
+              priority
+              style={{ maxHeight: '100px' }}
+            />
+          </div>
+        </div>
       </div>
     </footer>
   );

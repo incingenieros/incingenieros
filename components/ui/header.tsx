@@ -1,12 +1,42 @@
 "use client";
 
-import { useState } from "react";
-import Link from "next/link";
+import { useState, useEffect } from "react";
 import Logo from "./logo";
 import ActiveLink from "./active-link";
+import LanguageSelector from "./language-selector";
+import { useLanguage } from "@/contexts/language-context";
 
 export default function Header() {
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(true); // Asumimos móvil por defecto
+  const [activeSection, setActiveSection] = useState('');
+  const { t } = useLanguage();
+
+  // Detectar el tamaño de la pantalla al cargar y cuando cambia
+  useEffect(() => {
+    // Función para verificar si estamos en móvil
+    const checkIfMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    // Verificar al inicio
+    checkIfMobile();
+    
+    // Agregar listener para cambios de tamaño
+    window.addEventListener('resize', checkIfMobile);
+    
+    // Limpiar listener
+    return () => window.removeEventListener('resize', checkIfMobile);
+  }, []);
+  
+  // Función para manejar cuando una sección se vuelve activa
+  const handleSectionActive = (id: string, isActive: boolean) => {
+    if (isActive) {
+      setActiveSection(id);
+    } else if (activeSection === id) {
+      setActiveSection('');
+    }
+  };
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 w-full">
@@ -15,191 +45,68 @@ export default function Header() {
           {/* Site branding */}
           <div className="flex items-center gap-3">
             <Logo />
-            <h1 className="text-lg text-white whitespace-nowrap">Ing. Francisco José Arrazola Méndez
-</h1>
+            <h1 className="text-lg text-white whitespace-nowrap">Ing. Francisco Arrazola Méndez</h1>
           </div>
 
-          {/* Desktop navigation */}
-          <nav className="flex grow justify-end">
-            <ul className="flex items-center gap-6 text-sm">
-              <li>
-                <ActiveLink href="#inicio">
-                  Inicio
-                </ActiveLink>
-              </li>
-              <li>
-                <ActiveLink href="#experiencia">
-                  Experiencia
-                </ActiveLink>
-              </li>
-              <li>
-                <ActiveLink href="#consultoria">
-                  Consultoría
-                </ActiveLink>
-              </li>
-              <li>
-                <ActiveLink href="#industrial">
-                  Industrial
-                </ActiveLink>
-              </li>
-              <li>
-                <ActiveLink href="#naval">
-                  Naval
-                </ActiveLink>
-              </li>
-              <li>
-                <ActiveLink href="#testimonios">
-                  Éxitos
-                </ActiveLink>
-              </li>
-              <li>
-                <ActiveLink href="#contacto">
-                  Contacto
-                </ActiveLink>
-              </li>
-            </ul>
-          </nav>
+          {/* Desktop menu - solo visible en desktop */}
+          {!isMobile && (
+            <nav>
+              <ul className="flex items-center gap-6 text-lg">
+                <li><ActiveLink href="#inicio" onActive={handleSectionActive}>{t('nav.home')}</ActiveLink></li>
+                <li><ActiveLink href="#experiencia" onActive={handleSectionActive}>{t('nav.experience')}</ActiveLink></li>
+                <li><ActiveLink href="#consultoria" onActive={handleSectionActive}>{t('nav.consulting')}</ActiveLink></li>
+                <li><ActiveLink href="#industrial" onActive={handleSectionActive}>{t('nav.industrial')}</ActiveLink></li>
+                <li><ActiveLink href="#naval" onActive={handleSectionActive}>{t('nav.naval')}</ActiveLink></li>
+                <li><ActiveLink href="#testimonios" onActive={handleSectionActive}>{t('nav.success')}</ActiveLink></li>
+                <li><ActiveLink href="#contacto" onActive={handleSectionActive}>{t('nav.contact')}</ActiveLink></li>
+                <li className="ml-2"><LanguageSelector /></li>
+              </ul>
+            </nav>
+          )}
 
-          {/* Mobile menu button - oculto para mostrar siempre la navegación */}
-          <button
-            className="hamburger hidden"
-            aria-controls="mobile-nav"
-            aria-expanded={mobileNavOpen}
-            onClick={() => setMobileNavOpen(!mobileNavOpen)}
-          >
-            <span className="sr-only">Menu</span>
-            <svg
-              className="h-6 w-6 fill-current text-gray-300 hover:text-white"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <rect y="4" width="24" height="2" />
-              <rect y="11" width="24" height="2" />
-              <rect y="18" width="24" height="2" />
-            </svg>
-          </button>
-
-          {/* Desktop sign in links 
-          <ul className="hidden md:flex md:items-center md:justify-end md:gap-3">
-            <li>
-              <Link
-                href="/signin"
-                className="btn-sm relative bg-linear-to-b from-gray-800 to-gray-800/60 bg-[length:100%_100%] bg-[bottom] py-[5px] text-gray-300 before:pointer-events-none before:absolute before:inset-0 before:rounded-[inherit] before:border before:border-transparent before:[background:linear-gradient(to_right,var(--color-gray-800),var(--color-gray-700),var(--color-gray-800))_border-box] before:[mask-composite:exclude_!important] before:[mask:linear-gradient(white_0_0)_padding-box,_linear-gradient(white_0_0)] hover:bg-[length:100%_150%]"
-              >
-                Sign In
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/signup"
-                className="btn-sm bg-linear-to-t from-indigo-600 to-indigo-500 bg-[length:100%_100%] bg-[bottom] py-[5px] text-white shadow-[inset_0px_1px_0px_0px_--theme(--color-white/.16)] hover:bg-[length:100%_150%]"
-              >
-                Register
-              </Link>
-            </li>
-          </ul>
-          */}
-        </div>
-      </div>
-
-      {/* Mobile navigation */}
-      <div
-        id="mobile-nav"
-        className={`fixed left-0 top-0 z-20 h-screen w-full transform bg-gray-900 p-6 transition-transform duration-300 ease-in-out ${mobileNavOpen ? 'translate-x-0' : '-translate-x-full'}`}
-      >
-        <div className="flex h-full flex-col overflow-y-auto">
-          <div className="mb-6 flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <Logo />
-              <h1 className="text-lg font-bold text-white">Marítima Ingeniería</h1>
-            </div>
-            <button
-              className="text-gray-300 hover:text-white"
-              onClick={() => setMobileNavOpen(false)}
-            >
-              <span className="sr-only">Close</span>
-              <svg
-                className="h-6 w-6 fill-current"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path d="M18.707 6.707L17.293 5.293 12 10.586 6.707 5.293 5.293 6.707 10.586 12 5.293 17.293 6.707 18.707 12 13.414 17.293 18.707 18.707 17.293 13.414 12z" />
+          {/* Hamburger button - solo visible en móvil */}
+          {isMobile && (
+            <button onClick={() => setMobileNavOpen(!mobileNavOpen)}>
+              <svg className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
               </svg>
             </button>
-          </div>
-          <nav className="flex grow flex-col">
-            <ul className="space-y-4 text-lg">
-              <li>
-                <Link
-                  href="/"
-                  className="text-gray-300 hover:text-white"
-                  onClick={() => setMobileNavOpen(false)}
-                >
-                  Inicio
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/consultoria"
-                  className="text-gray-300 hover:text-white"
-                  onClick={() => setMobileNavOpen(false)}
-                >
-                  Consultoría
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/ing-industrial"
-                  className="text-gray-300 hover:text-white"
-                  onClick={() => setMobileNavOpen(false)}
-                >
-                  Industrial / Fabricación
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/ing-naval"
-                  className="text-gray-300 hover:text-white"
-                  onClick={() => setMobileNavOpen(false)}
-                >
-                  Naval / Offshore
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/contacto"
-                  className="text-gray-300 hover:text-white"
-                  onClick={() => setMobileNavOpen(false)}
-                >
-                  Contacto
-                </Link>
-              </li>
-            </ul>
-            <div className="mt-6 pt-6 border-t border-gray-800">
-              <ul className="space-y-4">
-                <li>
-                  <Link
-                    href="/signin"
-                    className="btn-sm w-full text-center bg-linear-to-b from-gray-800 to-gray-800/60 bg-[length:100%_100%] bg-[bottom] py-[5px] text-gray-300 before:pointer-events-none before:absolute before:inset-0 before:rounded-[inherit] before:border before:border-transparent before:[background:linear-gradient(to_right,var(--color-gray-800),var(--color-gray-700),var(--color-gray-800))_border-box] before:[mask-composite:exclude_!important] before:[mask:linear-gradient(white_0_0)_padding-box,_linear-gradient(white_0_0)] hover:bg-[length:100%_150%]"
-                    onClick={() => setMobileNavOpen(false)}
-                  >
-                    Sign In
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/signup"
-                    className="btn-sm w-full text-center bg-linear-to-t from-indigo-600 to-indigo-500 bg-[length:100%_100%] bg-[bottom] py-[5px] text-white shadow-[inset_0px_1px_0px_0px_--theme(--color-white/.16)] hover:bg-[length:100%_150%]"
-                    onClick={() => setMobileNavOpen(false)}
-                  >
-                    Register
-                  </Link>
-                </li>
-              </ul>
-            </div>
-          </nav>
+          )}
         </div>
       </div>
+
+      {/* Mobile menu overlay */}
+      {isMobile && mobileNavOpen && (
+        <div className="fixed inset-0 z-40 bg-gray-900/95">
+          <div className="flex h-full flex-col overflow-y-auto pt-16 pb-6 px-6">
+            {/* Close button */}
+            <div className="absolute top-4 right-4">
+              <button 
+                className="text-white" 
+                onClick={() => setMobileNavOpen(false)}
+              >
+                <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            
+            {/* Mobile navigation */}
+            <nav className="mt-8">
+              <ul className="flex flex-col space-y-6 text-lg text-center">
+                <li><a href="#inicio" className={`block transition duration-150 ease-in-out ${activeSection === 'inicio' ? 'text-indigo-400' : 'text-gray-300 hover:text-white'}`} onClick={() => setMobileNavOpen(false)}>{t('nav.home')}</a></li>
+                <li><a href="#experiencia" className={`block transition duration-150 ease-in-out ${activeSection === 'experiencia' ? 'text-indigo-400' : 'text-gray-300 hover:text-white'}`} onClick={() => setMobileNavOpen(false)}>{t('nav.experience')}</a></li>
+                <li><a href="#consultoria" className={`block transition duration-150 ease-in-out ${activeSection === 'consultoria' ? 'text-indigo-400' : 'text-gray-300 hover:text-white'}`} onClick={() => setMobileNavOpen(false)}>{t('nav.consulting')}</a></li>
+                <li><a href="#industrial" className={`block transition duration-150 ease-in-out ${activeSection === 'industrial' ? 'text-indigo-400' : 'text-gray-300 hover:text-white'}`} onClick={() => setMobileNavOpen(false)}>{t('nav.industrial')}</a></li>
+                <li><a href="#naval" className={`block transition duration-150 ease-in-out ${activeSection === 'naval' ? 'text-indigo-400' : 'text-gray-300 hover:text-white'}`} onClick={() => setMobileNavOpen(false)}>{t('nav.naval')}</a></li>
+                <li><a href="#testimonios" className={`block transition duration-150 ease-in-out ${activeSection === 'testimonios' ? 'text-indigo-400' : 'text-gray-300 hover:text-white'}`} onClick={() => setMobileNavOpen(false)}>{t('nav.success')}</a></li>
+                <li><a href="#contacto" className={`block transition duration-150 ease-in-out ${activeSection === 'contacto' ? 'text-indigo-400' : 'text-gray-300 hover:text-white'}`} onClick={() => setMobileNavOpen(false)}>{t('nav.contact')}</a></li>
+                <li className="flex justify-center mt-4"><LanguageSelector /></li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      )}
     </header>
   );
 }
