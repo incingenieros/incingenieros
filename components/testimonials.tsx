@@ -30,7 +30,7 @@ const testimonials = [
     position: "Director de Operaciones",
     company: "Astilleros Navales del Cantábrico",
     content:
-      "La colaboración con el ingeniero Francisco ha sido fundamental para modernizar nuestras instalaciones. Su conocimiento en diseño naval nos permitió optimizar nuestros procesos de construcción, reduciendo los tiempos de entrega en un 25% y mejorando la calidad de nuestros buques pesqueros.",
+      "\"La colaboración con el ingeniero Francisco ha sido fundamental para modernizar nuestras instalaciones. Su conocimiento en diseño naval nos permitió optimizar nuestros procesos de construcción, reduciendo los tiempos de entrega en un 25% y mejorando la calidad de nuestros buques pesqueros.\"",
     categories: [1, 2, 5],
   },
   {
@@ -40,7 +40,7 @@ const testimonials = [
     position: "Gerente de Proyectos",
     company: "Grupo Marítimo Mediterráneo",
     content:
-      "Gracias al ingeniero Francisco, pudimos implementar sistemas de propulsión más eficientes en nuestra flota de transporte. Su asesoría técnica fue clave para obtener las certificaciones internacionales necesarias, lo que nos ha abierto nuevos mercados en Europa y Asia.",
+      "\"Gracias al ingeniero Francisco, pudimos implementar sistemas de propulsión más eficientes en nuestra flota de transporte. Su asesoría técnica fue clave para obtener las certificaciones internacionales necesarias, lo que nos ha abierto nuevos mercados en Europa y Asia.\"",
     categories: [1, 2, 4],
   },
   {
@@ -50,7 +50,7 @@ const testimonials = [
     position: "Director Técnico",
     company: "Consorcio Industrial Marítimo",
     content:
-      "La implementación de tecnologías sostenibles en nuestras operaciones parecía un desafío insuperable. El ingeniero Francisco diseñó una estrategia integral que nos permitió reducir nuestro impacto ambiental en un 40% mientras aumentábamos nuestra eficiencia operativa.",
+      "\"La implementación de tecnologías sostenibles en nuestras operaciones parecía un desafío insuperable. El ingeniero Francisco diseñó una estrategia integral que nos permitió reducir nuestro impacto ambiental en un 40% mientras aumentábamos nuestra eficiencia operativa.\"",
     categories: [1, 3, 5],
   },
   {
@@ -60,7 +60,7 @@ const testimonials = [
     position: "Chief Operations Officer",
     company: "Northern Sea Shipyards",
     content:
-      "Working with Engineer Francisco transformed our offshore platform maintenance protocols. His structural analysis methodology identified critical stress points we had overlooked, potentially saving us millions in repairs and ensuring the safety of our crew.",
+      "\"Working with Engineer Francisco transformed our offshore platform maintenance protocols. His structural analysis methodology identified critical stress points we had overlooked, potentially saving us millions in repairs and ensuring the safety of our crew.\"",
     categories: [1, 4],
   },
   {
@@ -70,7 +70,7 @@ const testimonials = [
     position: "Directora de Cumplimiento",
     company: "Autoridad Portuaria de Valencia",
     content:
-      "La certificación de nuestras nuevas instalaciones portuarias fue un proceso complejo que el ingeniero Francisco gestionó con extraordinaria eficiencia. Su conocimiento de las normativas internacionales nos permitió cumplir con todos los estándares de seguridad y calidad en tiempo récord.",
+      "\"La certificación de nuestras nuevas instalaciones portuarias fue un proceso complejo que el ingeniero Francisco gestionó con extraordinaria eficiencia. Su conocimiento de las normativas internacionales nos permitió cumplir con todos los estándares de seguridad y calidad en tiempo récord.\"",
     categories: [1, 3, 4],
   },
   {
@@ -80,7 +80,7 @@ const testimonials = [
     position: "Director de Innovación",
     company: "Naviera Atlántica",
     content:
-      "El rediseño de nuestros sistemas de navegación realizado por el ingeniero Francisco ha revolucionado nuestra flota. La integración de tecnologías digitales ha mejorado la precisión de nuestras operaciones y reducido el consumo de combustible en un 22%, con un retorno de inversión en menos de 18 meses.",
+      "\"El rediseño de nuestros sistemas de navegación realizado por el ingeniero Francisco ha revolucionado nuestra flota. La integración de tecnologías digitales ha mejorado la precisión de nuestras operaciones y reducido el consumo de combustible en un 22%, con un retorno de inversión en menos de 18 meses.\"",
     categories: [1, 3],
   },
   {
@@ -90,7 +90,7 @@ const testimonials = [
     position: "Directora de Sostenibilidad",
     company: "Planta Industrial Marítima",
     content:
-      "La transición hacia energías renovables en nuestras instalaciones costeras fue impecablemente planificada por el ingeniero Francisco. Su enfoque integral consideró aspectos técnicos, económicos y ambientales, permitiéndonos reducir nuestra huella de carbono mientras mejorábamos nuestra imagen corporativa.",
+      "\"La transición hacia energías renovables en nuestras instalaciones costeras fue impecablemente planificada por el ingeniero Francisco. Su enfoque integral consideró aspectos técnicos, económicos y ambientales, permitiéndonos reducir nuestra huella de carbono mientras mejorábamos nuestra imagen corporativa.\"",
     categories: [1, 3, 5],
   },
   {
@@ -100,7 +100,7 @@ const testimonials = [
     position: "Jefe de Inspección Técnica",
     company: "Bureau Veritas Naval España",
     content:
-      "La metodología de certificación desarrollada por el ingeniero Francisco ha transformado nuestros procesos de inspección. Lo que antes requería semanas de trabajo ahora se completa en días, manteniendo los más altos estándares de seguridad y calidad que exigen nuestros clientes internacionales.",
+      "\"La metodología de certificación desarrollada por el ingeniero Francisco ha transformado nuestros procesos de inspección. Lo que antes requería semanas de trabajo ahora se completa en días, manteniendo los más altos estándares de seguridad y calidad que exigen nuestros clientes internacionales.\"",
     categories: [1, 4],
   },
   {
@@ -110,7 +110,7 @@ const testimonials = [
     position: "CEO",
     company: "Astilleros Ecológicos del Sur",
     content:
-      "La visión del ingeniero Francisco para integrar prácticas sostenibles en nuestros procesos de construcción naval ha sido revolucionaria. Sus innovaciones nos han posicionado como líderes en construcción naval ecológica, atrayendo clientes comprometidos con la sostenibilidad y abriendo nuevas oportunidades de negocio.",
+      "\"La visión del ingeniero Francisco para integrar prácticas sostenibles en nuestros procesos de construcción naval ha sido revolucionaria. Sus innovaciones nos han posicionado como líderes en construcción naval ecológica, atrayendo clientes comprometidos con la sostenibilidad y abriendo nuevas oportunidades de negocio.\"",
     categories: [1, 2, 5],
   },
 ];
@@ -135,6 +135,11 @@ export default function Testimonials() {
       <div className="pb-12 md:pb-20">
         {/* Section header */}
         <div className="mx-auto max-w-3xl pb-12 text-center">
+        <div className="inline-flex items-center gap-3 pb-3 before:h-px before:w-8 before:bg-linear-to-r before:from-transparent before:to-indigo-200/50 after:h-px after:w-8 after:bg-linear-to-l after:from-transparent after:to-indigo-200/50">
+            <span className="inline-flex bg-linear-to-r from-indigo-500 to-indigo-200 bg-clip-text text-transparent">
+              Soluciones técnicas que transformaron retos en logros
+            </span>
+          </div>
           <h2 className="animate-[gradient_6s_linear_infinite] bg-[linear-gradient(to_right,var(--color-gray-200),var(--color-indigo-200),var(--color-gray-50),var(--color-indigo-300),var(--color-gray-200))] bg-[length:200%_auto] bg-clip-text pb-4 font-nacelle text-3xl font-semibold text-transparent md:text-4xl">
             Casos de Éxito en Ingeniería Naval
           </h2>

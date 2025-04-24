@@ -531,12 +531,32 @@ export default function NavalOffshoreSection() {
             <p className="mb-4 text-indigo-200/65">
               ¿Necesita soluciones especializadas para su proyecto marítimo o offshore?
             </p>
-            <button className="inline-flex items-center justify-center rounded-md bg-indigo-500 px-6 py-3 text-base font-medium text-white transition-colors hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+            <a 
+              href="#contacto"
+              onClick={(e) => {
+                e.preventDefault();
+                // Navegar a la sección Contacto
+                window.location.href = '#contacto';
+                // Hacer scroll al formulario y enfocarlo
+                setTimeout(() => {
+                  const formulario = document.querySelector('#contacto h3');
+                  if (formulario && formulario.textContent?.includes('Envíanos un mensaje')) {
+                    formulario.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    // Enfocar el primer campo del formulario
+                    const nombreInput = document.querySelector('#nombre');
+                    if (nombreInput) {
+                      (nombreInput as HTMLInputElement).focus();
+                    }
+                  }
+                }, 500);
+              }}
+              className="inline-flex items-center justify-center rounded-md bg-indigo-500 px-6 py-3 text-base font-medium text-white transition-colors hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+            >
               Solicitar consulta técnica
               <svg className="ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8-8-8z" />
               </svg>
-            </button>
+            </a>
           </div>
         </div>
       </div>

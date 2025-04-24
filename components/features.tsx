@@ -61,7 +61,7 @@ export default function Features() {
           {/* Items */}
           <div className="mx-auto grid max-w-sm gap-12 sm:max-w-none sm:grid-cols-2 md:gap-x-14 md:gap-y-16 lg:grid-cols-3">
             <ServiceCard
-              image="/images/offshore/13-evaluacion-proyectos.jpg"
+              image="/images/offshore/13-eval-proyectos.jpg"
               icon={
                 <svg
                   className="mb-3 fill-indigo-500"

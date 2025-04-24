@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from 'react';
+import { useLanguage } from "@/contexts/language-context";
 
 interface CounterProps {
   end: number;
@@ -20,6 +21,27 @@ const Counter = ({ end, duration, label, suffix = "", icon }: CounterProps) => {
   const hasAnimated = useRef(false);
 
   useEffect(() => {
+    // Iniciar la animación inmediatamente si el elemento ya está visible
+    if (typeof window !== 'undefined') {
+      const isElementInViewport = () => {
+        if (!countRef.current) return false;
+        const rect = countRef.current.getBoundingClientRect();
+        return (
+          rect.top >= 0 &&
+          rect.left >= 0 &&
+          rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+          rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+        );
+      };
+
+      // Si el elemento ya está visible, iniciar la animación inmediatamente
+      if (isElementInViewport() && !hasAnimated.current) {
+        hasAnimated.current = true;
+        animateCounter();
+      }
+    }
+
+    // Configurar el observador para detectar cuando el elemento entre en el viewport
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting && !hasAnimated.current) {
@@ -27,7 +49,7 @@ const Counter = ({ end, duration, label, suffix = "", icon }: CounterProps) => {
           animateCounter();
         }
       },
-      { threshold: 0.1 }
+      { threshold: 0.1, rootMargin: '0px 0px -10% 0px' }
     );
 
     if (countRef.current) {
@@ -65,28 +87,54 @@ const Counter = ({ end, duration, label, suffix = "", icon }: CounterProps) => {
   };
 
   return (
-    <div className="flex items-center space-x-3">
-      <div className="inline-flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-indigo-600/30 text-white">
-        {icon}
+    <div className="flex items-center space-x-2">
+      <div className="inline-flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-indigo-500/30 text-white">
+        <span className="scale-75">{icon}</span>
       </div>
       <div className="flex flex-col items-start">
-        <div ref={countRef} className="text-2xl font-bold text-white text-left">
+        <div ref={countRef} className="text-xl font-bold text-white text-left">
           {count}{suffix}
         </div>
-        <div className="text-xs text-white text-left">{label}</div>
+        <div className="text-xs text-white/80 text-left">{label}</div>
       </div>
     </div>
   );
 };
 
 export default function AnimatedCounters({ className = "" }: AnimatedCountersProps) {
+  const { locale } = useLanguage();
+  
+  // Traducciones para las etiquetas
+  const labels = {
+    experience: {
+      es: "Años de Experiencia",
+      en: "Years of Experience",
+      ca: "Anys d'Experiència"
+    },
+    projects: {
+      es: "Proyectos Terminados",
+      en: "Completed Projects",
+      ca: "Projectes Finalitzats"
+    },
+    consulting: {
+      es: "Horas de Consultoría",
+      en: "Consulting Hours",
+      ca: "Hores de Consultoria"
+    },
+    countries: {
+      es: "Países",
+      en: "Countries",
+      ca: "Països"
+    }
+  };
+  
   return (
     <div className={`${className}`}>
-      <div className="flex flex-col space-y-5">
+      <div className="flex flex-col space-y-4">
         <Counter 
           end={20} 
           duration={2000} 
-          label="Años de Experiencia" 
+          label={labels.experience[locale]} 
           suffix="+" 
           icon={
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-calendar-days">
@@ -106,7 +154,7 @@ export default function AnimatedCounters({ className = "" }: AnimatedCountersPro
         <Counter 
           end={150} 
           duration={2500} 
-          label="Proyectos Terminados" 
+          label={labels.projects[locale]} 
           suffix="+" 
           icon={
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-check-circle">
@@ -118,7 +166,7 @@ export default function AnimatedCounters({ className = "" }: AnimatedCountersPro
         <Counter 
           end={5000} 
           duration={3000} 
-          label="Horas de Consultoría" 
+          label={labels.consulting[locale]} 
           suffix="+" 
           icon={
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-clock">
@@ -130,7 +178,7 @@ export default function AnimatedCounters({ className = "" }: AnimatedCountersPro
         <Counter 
           end={12} 
           duration={1500} 
-          label="Países" 
+          label={labels.countries[locale]} 
           suffix="" 
           icon={
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-globe">

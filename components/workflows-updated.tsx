@@ -7,13 +7,6 @@ import WorflowImg02 from "@/public/images/workflow-02.png";
 import WorflowImg03 from "@/public/images/workflow-03.png";
 import Spotlight from "@/components/spotlight";
 
-// Declarar el tipo global para window
-declare global {
-  interface Window {
-    expandAsistenciaTecnicaCard?: () => void;
-  }
-}
-
 export default function SpecializationAreas() {
   // Función para manejar el clic en la tarjeta de Diseño Naval
   const handleDisenoNavalClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
@@ -39,46 +32,27 @@ export default function SpecializationAreas() {
     // Navegar a la sección Consultoría
     window.location.href = '#consultoria';
     
-    // Llamar a la función expandAsistenciaTecnicaCard del script externo
-    // Esta función se encargará de expandir la tarjeta de forma más robusta
-    setTimeout(() => {
-      if (typeof window !== 'undefined' && window.expandAsistenciaTecnicaCard) {
-        window.expandAsistenciaTecnicaCard();
-      }
-    }, 500);
-  };
-  
-  // Función para manejar el clic en la tarjeta de Ingeniería Offshore
-  const handleIngenieriaOffshoreClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
-    // Navegar a la sección Naval
-    window.location.href = '#naval';
-    
     // Establecer un timeout para dar tiempo a que se cargue la sección
     setTimeout(() => {
-      // Buscar y hacer clic en el botón de Plataformas Offshore
-      const navalButtons = document.querySelectorAll('#naval button');
-      navalButtons.forEach((button) => {
-        if (button.textContent?.includes('Plataformas Offshore')) {
-          (button as HTMLButtonElement).click();
+      // Buscar la tarjeta "Asistencia Técnica Internacional" y simular un hover
+      const consultoriaCards = document.querySelectorAll('#consultoria article');
+      consultoriaCards.forEach((card) => {
+        // Buscar el título de la tarjeta
+        const title = card.querySelector('h3');
+        if (title && title.textContent?.includes('Asistencia Técnica Internacional')) {
+          // Simular hover para expandir la tarjeta
+          const mouseEnterEvent = new MouseEvent('mouseenter', {
+            bubbles: true,
+            cancelable: true,
+          });
+          card.dispatchEvent(mouseEnterEvent);
+          
+          // Hacer scroll a la tarjeta para asegurar que sea visible
+          card.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
       });
     }, 500);
   };
-  
-  // Cargar el script para expandir la tarjeta
-  useEffect(() => {
-    // Verificar si el script ya está cargado
-    const scriptExists = document.querySelector('script[src="/js/expand-card.js"]');
-    
-    if (!scriptExists) {
-      // Crear y agregar el script al documento
-      const script = document.createElement('script');
-      script.src = '/js/expand-card.js';
-      script.async = true;
-      document.body.appendChild(script);
-    }
-  }, []);
 
   return (
     <section id="experiencia" className="scroll-mt-24">
@@ -195,11 +169,10 @@ export default function SpecializationAreas() {
                 </div>
               </div>
             </a>
-            {/* Card 3 - Ingeniería Offshore */}
+            {/* Card 3 */}
             <a
               className="group/card relative h-full overflow-hidden rounded-2xl bg-gray-800 p-px before:pointer-events-none before:absolute before:-left-40 before:-top-40 before:z-10 before:h-80 before:w-80 before:translate-x-[var(--mouse-x)] before:translate-y-[var(--mouse-y)] before:rounded-full before:bg-indigo-500/80 before:opacity-0 before:blur-3xl before:transition-opacity before:duration-500 after:pointer-events-none after:absolute after:-left-48 after:-top-48 after:z-30 after:h-64 after:w-64 after:translate-x-[var(--mouse-x)] after:translate-y-[var(--mouse-y)] after:rounded-full after:bg-indigo-500 after:opacity-0 after:blur-3xl after:transition-opacity after:duration-500 hover:after:opacity-20 group-hover:before:opacity-100"
-              href="#naval"
-              onClick={handleIngenieriaOffshoreClick}
+              href="#0"
             >
               <div className="relative z-20 h-full overflow-hidden rounded-[inherit] bg-gray-950 after:absolute after:inset-0 after:bg-linear-to-br after:from-gray-900/50 after:via-gray-800/25 after:to-gray-900/50">
                 {/* Arrow */}
