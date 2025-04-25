@@ -326,87 +326,30 @@ export default function Testimonials() {
     // Obtener el idioma actual
     const lang = locale === "ca" ? "ca" : locale === "en" ? "en" : "es";
     
-    // Aplicar traducciones según la clave de traducción
-    if (testimonial.translationKey === "testimonial1") {
-      console.log(`Traduciendo testimonio 1 a ${lang}`);
+    // Crear un mapa de traducciones para acceder dinámicamente
+    const translationsMap = {
+      "testimonial1": testimonial1Translations,
+      "testimonial2": testimonial2Translations,
+      "testimonial3": testimonial3Translations,
+      "testimonial4": testimonial4Translations,
+      "testimonial5": testimonial5Translations,
+      "testimonial6": testimonial6Translations,
+      "testimonial7": testimonial7Translations,
+      "testimonial8": testimonial8Translations,
+      "testimonial9": testimonial9Translations
+    };
+    
+    // Verificar si existe una traducción para este testimonio
+    if (testimonial.translationKey && translationsMap[testimonial.translationKey]) {
+      const translations = translationsMap[testimonial.translationKey];
+      console.log(`Traduciendo ${testimonial.translationKey} a ${lang}`);
+      
       return {
         ...testimonial,
-        name: testimonial1Translations[lang].name,
-        position: testimonial1Translations[lang].position,
-        company: testimonial1Translations[lang].company,
-        content: testimonial1Translations[lang].content
-      };
-    } else if (testimonial.translationKey === "testimonial2") {
-      console.log(`Traduciendo testimonio 2 a ${lang}`);
-      return {
-        ...testimonial,
-        name: testimonial2Translations[lang].name,
-        position: testimonial2Translations[lang].position,
-        company: testimonial2Translations[lang].company,
-        content: testimonial2Translations[lang].content
-      };
-    } else if (testimonial.translationKey === "testimonial3") {
-      console.log(`Traduciendo testimonio 3 a ${lang}`);
-      return {
-        ...testimonial,
-        name: testimonial3Translations[lang].name,
-        position: testimonial3Translations[lang].position,
-        company: testimonial3Translations[lang].company,
-        content: testimonial3Translations[lang].content
-      };
-    } else if (testimonial.translationKey === "testimonial4") {
-      console.log(`Traduciendo testimonio 4 a ${lang}`);
-      return {
-        ...testimonial,
-        name: testimonial4Translations[lang].name,
-        position: testimonial4Translations[lang].position,
-        company: testimonial4Translations[lang].company,
-        content: testimonial4Translations[lang].content
-      };
-    } else if (testimonial.translationKey === "testimonial5") {
-      console.log(`Traduciendo testimonio 5 a ${lang}`);
-      return {
-        ...testimonial,
-        name: testimonial5Translations[lang].name,
-        position: testimonial5Translations[lang].position,
-        company: testimonial5Translations[lang].company,
-        content: testimonial5Translations[lang].content
-      };
-    } else if (testimonial.translationKey === "testimonial6") {
-      console.log(`Traduciendo testimonio 6 a ${lang}`);
-      return {
-        ...testimonial,
-        name: testimonial6Translations[lang].name,
-        position: testimonial6Translations[lang].position,
-        company: testimonial6Translations[lang].company,
-        content: testimonial6Translations[lang].content
-      };
-    } else if (testimonial.translationKey === "testimonial7") {
-      console.log(`Traduciendo testimonio 7 a ${lang}`);
-      return {
-        ...testimonial,
-        name: testimonial7Translations[lang].name,
-        position: testimonial7Translations[lang].position,
-        company: testimonial7Translations[lang].company,
-        content: testimonial7Translations[lang].content
-      };
-    } else if (testimonial.translationKey === "testimonial8") {
-      console.log(`Traduciendo testimonio 8 a ${lang}`);
-      return {
-        ...testimonial,
-        name: testimonial8Translations[lang].name,
-        position: testimonial8Translations[lang].position,
-        company: testimonial8Translations[lang].company,
-        content: testimonial8Translations[lang].content
-      };
-    } else if (testimonial.translationKey === "testimonial9") {
-      console.log(`Traduciendo testimonio 9 a ${lang}`);
-      return {
-        ...testimonial,
-        name: testimonial9Translations[lang].name,
-        position: testimonial9Translations[lang].position,
-        company: testimonial9Translations[lang].company,
-        content: testimonial9Translations[lang].content
+        name: translations[lang].name,
+        position: translations[lang].position,
+        company: translations[lang].company,
+        content: translations[lang].content
       };
     }
     
