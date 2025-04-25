@@ -87,14 +87,14 @@ const Counter = ({ end, duration, label, suffix = "", icon }: CounterProps) => {
 
   return (
     <div className="flex items-center space-x-2">
-      <div className="inline-flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-indigo-500/30 text-white">
-        <span className="scale-75">{icon}</span>
-      </div>
-      <div className="flex flex-col items-start">
-        <div ref={countRef} className="text-xl font-bold text-white text-left">
+      <div className="flex flex-col items-end">
+        <div ref={countRef} className="text-xl font-bold text-white text-right">
           {count}{suffix}
         </div>
-        <div className="text-xs text-white/80 text-left">{label}</div>
+        <div className="text-xs text-white/80 text-right">{label}</div>
+      </div>
+      <div className="inline-flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-indigo-500/30 text-white">
+        <span className="scale-75">{icon}</span>
       </div>
     </div>
   );
@@ -102,8 +102,8 @@ const Counter = ({ end, duration, label, suffix = "", icon }: CounterProps) => {
 
 export default function AnimatedCounters({ className = "" }: AnimatedCountersProps) {
   return (
-    <div className={`${className}`}>
-      <div className="flex flex-col space-y-4">
+    <div className={`${className} flex justify-end`}>
+      <div className="flex flex-col space-y-4 items-end">
         <Counter 
           end={20} 
           duration={2000} 

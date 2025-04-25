@@ -2,8 +2,10 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { useLanguage } from "@/contexts/language-context";
 
 export default function ContactSection() {
+  const { locale } = useLanguage();
   const [formData, setFormData] = useState({
     nombre: "",
     email: "",
@@ -42,7 +44,11 @@ export default function ContactSection() {
         mensaje: "",
       });
     } catch (error) {
-      setSubmitError("Hubo un error al enviar el mensaje. Por favor, inténtalo de nuevo.");
+      setSubmitError(
+        locale === "es" ? "Hubo un error al enviar el mensaje. Por favor, inténtalo de nuevo." :
+        locale === "en" ? "There was an error sending the message. Please try again." :
+        "Hi ha hagut un error en enviar el missatge. Si us plau, torna-ho a provar."
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -54,14 +60,21 @@ export default function ContactSection() {
         <div className="pb-12 md:pb-20">
         <div className="max-w-3xl mx-auto text-center pb-12 md:pb-16">
         <div className="inline-flex items-center gap-3 pb-3 before:h-px before:w-8 before:bg-linear-to-r before:from-transparent before:to-indigo-200/50 after:h-px after:w-8 after:bg-linear-to-l after:from-transparent after:to-indigo-200/50">
-            <span className="inline-flex bg-linear-to-r from-indigo-500 to-indigo-200 bg-clip-text text-transparent">
-              Localización, Contacto y Consultas
+              <span className="inline-flex bg-linear-to-r from-indigo-500 to-indigo-200 bg-clip-text text-transparent">
+              {locale === "es" ? "Localización, Contacto y Consultas" :
+               locale === "en" ? "Location, Contact and Inquiries" :
+               "Localització, Contacte i Consultes"}
             </span>
           </div>
-          <h2 className="animate-[gradient_6s_linear_infinite] bg-[linear-gradient(to_right,var(--color-gray-200),var(--color-indigo-200),var(--color-gray-50),var(--color-indigo-300),var(--color-gray-200))] bg-[length:200%_auto] bg-clip-text pb-4 font-nacelle text-3xl font-semibold text-transparent md:text-4xl">Contacto</h2>
+          <h2 className="animate-[gradient_6s_linear_infinite] bg-[linear-gradient(to_right,var(--color-gray-200),var(--color-indigo-200),var(--color-gray-50),var(--color-indigo-300),var(--color-gray-200))] bg-[length:200%_auto] bg-clip-text pb-4 font-nacelle text-3xl font-semibold text-transparent md:text-4xl">
+            {locale === "es" ? "Contacto" :
+             locale === "en" ? "Contact" :
+             "Contacte"}
+          </h2>
           <p className="text-lg text-indigo-200/65">
-            Conversemos sobre tu proyecto. Asesoría técnica, diseño y supervisión en cada etapa.
-            Completa el formulario o contáctame directamente.
+            {locale === "es" ? "Conversemos sobre tu proyecto. Asesoría técnica, diseño y supervisión en cada etapa. Completa el formulario o contáctame directamente." :
+             locale === "en" ? "Let's talk about your project. Technical advice, design and supervision at every stage. Fill out the form or contact me directly." :
+             "Parlem sobre el teu projecte. Assessoria tècnica, disseny i supervisió en cada etapa. Completa el formulari o contacta'm directament."}
           </p>
         </div>
 
@@ -86,7 +99,11 @@ export default function ContactSection() {
           <div className="flex flex-col gap-6">
             {/* Información de contacto */}
             <div className="bg-gray-900/75 rounded-xl p-6 backdrop-blur-md before:pointer-events-none before:absolute before:inset-0 before:rounded-[inherit] before:border before:border-transparent before:[background:linear-gradient(to_right,var(--color-gray-800),var(--color-gray-700),var(--color-gray-800))_border-box] before:[mask-composite:exclude_!important] before:[mask:linear-gradient(white_0_0)_padding-box,_linear-gradient(white_0_0)]">
-              <h3 className="text-xl font-semibold text-white mb-4">Información de contacto</h3>
+              <h3 className="text-xl font-semibold text-white mb-4">
+                {locale === "es" ? "Información de contacto" :
+                 locale === "en" ? "Contact information" :
+                 "Informació de contacte"}
+              </h3>
               
               <div className="grid md:grid-cols-3 gap-4">
                 <div className="flex flex-col">
@@ -97,11 +114,19 @@ export default function ContactSection() {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
                       </svg>
                     </div>
-                    <h4 className="text-indigo-300 font-medium">Dirección</h4>
+                    <h4 className="text-indigo-300 font-medium">
+                      {locale === "es" ? "Dirección" :
+                       locale === "en" ? "Address" :
+                       "Adreça"}
+                    </h4>
                   </div>
                   <p className="text-gray-300 text-sm">
-                    Calle Avall 2<br />
-                    43812 Brafim, España
+                    {locale === "es" ? "Calle Avall 2" :
+                     locale === "en" ? "Avall Street 2" :
+                     "Carrer Avall 2"}<br />
+                    43812 Brafim, {locale === "es" ? "España" :
+                                   locale === "en" ? "Spain" :
+                                   "Espanya"}
                   </p>
                 </div>
                 
@@ -112,7 +137,11 @@ export default function ContactSection() {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
                       </svg>
                     </div>
-                    <h4 className="text-indigo-300 font-medium">Teléfono</h4>
+                    <h4 className="text-indigo-300 font-medium">
+                      {locale === "es" ? "Teléfono" :
+                       locale === "en" ? "Phone" :
+                       "Telèfon"}
+                    </h4>
                   </div>
                   <p className="text-gray-300 text-sm">(+34) 607 651 430</p>
                   <p className="text-gray-300 text-sm flex items-center mt-1">
@@ -136,34 +165,54 @@ export default function ContactSection() {
             
             {/* Formulario de contacto */}
             <div className="bg-gray-900/75 rounded-xl p-6 backdrop-blur-md before:pointer-events-none before:absolute before:inset-0 before:rounded-[inherit] before:border before:border-transparent before:[background:linear-gradient(to_right,var(--color-gray-800),var(--color-gray-700),var(--color-gray-800))_border-box] before:[mask-composite:exclude_!important] before:[mask:linear-gradient(white_0_0)_padding-box,_linear-gradient(white_0_0)] flex-grow">
-              <h3 className="text-xl font-semibold text-white mb-4">Envíanos un mensaje</h3>
+              <h3 className="text-xl font-semibold text-white mb-4">
+                {locale === "es" ? "Envíanos un mensaje" :
+                 locale === "en" ? "Send us a message" :
+                 "Envia'ns un missatge"}
+              </h3>
               
               {submitSuccess ? (
                 <div className="bg-green-500/20 border border-green-500/30 rounded-lg p-4 text-center">
                   <svg className="w-12 h-12 text-green-500 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                   </svg>
-                  <h4 className="text-lg font-medium text-white mb-2">¡Mensaje enviado con éxito!</h4>
-                  <p className="text-gray-300">Gracias por contactarnos. Te responderemos lo antes posible.</p>
+                  <h4 className="text-lg font-medium text-white mb-2">
+                    {locale === "es" ? "¡Mensaje enviado con éxito!" :
+                     locale === "en" ? "Message sent successfully!" :
+                     "Missatge enviat amb èxit!"}
+                  </h4>
+                  <p className="text-gray-300">
+                    {locale === "es" ? "Gracias por contactarnos. Te responderemos lo antes posible." :
+                     locale === "en" ? "Thank you for contacting us. We will respond as soon as possible." :
+                     "Gràcies per contactar-nos. Et respondrem el més aviat possible."}
+                  </p>
                   <button 
                     onClick={() => setSubmitSuccess(false)}
                     className="mt-4 bg-indigo-600 hover:bg-indigo-700 text-white py-2 px-4 rounded-lg transition-colors"
                   >
-                    Enviar otro mensaje
+                    {locale === "es" ? "Enviar otro mensaje" :
+                     locale === "en" ? "Send another message" :
+                     "Enviar un altre missatge"}
                   </button>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div className="grid md:grid-cols-2 gap-4">
                     <div>
-                      <label htmlFor="nombre" className="block text-sm font-medium text-gray-300 mb-1">Nombre *</label>
+                      <label htmlFor="nombre" className="block text-sm font-medium text-gray-300 mb-1">
+                        {locale === "es" ? "Nombre" :
+                         locale === "en" ? "Name" :
+                         "Nom"} *
+                      </label>
                       <input
                         type="text"
                         id="nombre"
                         name="nombre"
                         value={formData.nombre}
                         onChange={handleChange}
-                        placeholder="Tu nombre completo"
+                        placeholder={locale === "es" ? "Tu nombre completo" :
+                                    locale === "en" ? "Your full name" :
+                                    "El teu nom complet"}
                         required
                         className="w-full bg-gray-800/50 border border-gray-700 rounded-lg px-3 py-2 text-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                       />
@@ -186,7 +235,11 @@ export default function ContactSection() {
                   
                   <div className="grid md:grid-cols-2 gap-4">
                     <div>
-                      <label htmlFor="telefono" className="block text-sm font-medium text-gray-300 mb-1">Teléfono</label>
+                      <label htmlFor="telefono" className="block text-sm font-medium text-gray-300 mb-1">
+                        {locale === "es" ? "Teléfono" :
+                         locale === "en" ? "Phone" :
+                         "Telèfon"}
+                      </label>
                       <input
                         type="tel"
                         id="telefono"
@@ -199,7 +252,11 @@ export default function ContactSection() {
                     </div>
                     
                     <div>
-                      <label htmlFor="asunto" className="block text-sm font-medium text-gray-300 mb-1">Asunto *</label>
+                      <label htmlFor="asunto" className="block text-sm font-medium text-gray-300 mb-1">
+                        {locale === "es" ? "Asunto" :
+                         locale === "en" ? "Subject" :
+                         "Assumpte"} *
+                      </label>
                       <select
                         id="asunto"
                         name="asunto"
@@ -208,23 +265,49 @@ export default function ContactSection() {
                         required
                         className="w-full bg-gray-800/50 border border-gray-700 rounded-lg px-3 py-2 text-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                       >
-                        <option value="">Selecciona un asunto</option>
-                        <option value="consulta">Consulta técnica</option>
-                        <option value="proyecto">Proyecto nuevo</option>
-                        <option value="certificacion">Certificación</option>
-                        <option value="otro">Otro</option>
+                        <option value="">
+                          {locale === "es" ? "Selecciona un asunto" :
+                           locale === "en" ? "Select a subject" :
+                           "Selecciona un assumpte"}
+                        </option>
+                        <option value="consulta">
+                          {locale === "es" ? "Consulta técnica" :
+                           locale === "en" ? "Technical inquiry" :
+                           "Consulta tècnica"}
+                        </option>
+                        <option value="proyecto">
+                          {locale === "es" ? "Proyecto nuevo" :
+                           locale === "en" ? "New project" :
+                           "Projecte nou"}
+                        </option>
+                        <option value="certificacion">
+                          {locale === "es" ? "Certificación" :
+                           locale === "en" ? "Certification" :
+                           "Certificació"}
+                        </option>
+                        <option value="otro">
+                          {locale === "es" ? "Otro" :
+                           locale === "en" ? "Other" :
+                           "Altre"}
+                        </option>
                       </select>
                     </div>
                   </div>
                   
                   <div>
-                    <label htmlFor="mensaje" className="block text-sm font-medium text-gray-300 mb-1">Mensaje *</label>
+                    <label htmlFor="mensaje" className="block text-sm font-medium text-gray-300 mb-1">
+                      {locale === "es" ? "Mensaje" :
+                       locale === "en" ? "Message" :
+                       "Missatge"} *
+                    </label>
                     <textarea
                       id="mensaje"
                       name="mensaje"
                       value={formData.mensaje}
                       onChange={handleChange}
-                      placeholder="Describe tu consulta o proyecto..."
+                      placeholder={locale === "es" ? "Describe tu consulta o proyecto..." :
+                                  locale === "en" ? "Describe your inquiry or project..." :
+                                  "Descriu la teva consulta o projecte..."}
                       required
                       rows={6}
                       className="w-full bg-gray-800/50 border border-gray-700 rounded-lg px-3 py-2 text-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent resize-none"
@@ -239,7 +322,9 @@ export default function ContactSection() {
                       className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-700 rounded"
                     />
                     <label htmlFor="verificacion" className="ml-2 block text-sm text-gray-300">
-                      Verificación de seguridad
+                      {locale === "es" ? "Verificación de seguridad" :
+                       locale === "en" ? "Security verification" :
+                       "Verificació de seguretat"}
                     </label>
                   </div>
                   
@@ -261,11 +346,15 @@ export default function ContactSection() {
                             <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                             <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                           </svg>
-                          Enviando...
+                          {locale === "es" ? "Enviando..." :
+                           locale === "en" ? "Sending..." :
+                           "Enviant..."}
                         </>
                       ) : (
                         <>
-                          Enviar mensaje
+                          {locale === "es" ? "Enviar mensaje" :
+                           locale === "en" ? "Send message" :
+                           "Enviar missatge"}
                           <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                           </svg>

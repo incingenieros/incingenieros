@@ -6,6 +6,7 @@ import WorflowImg01 from "@/public/images/workflow-01.png";
 import WorflowImg02 from "@/public/images/workflow-02.png";
 import WorflowImg03 from "@/public/images/workflow-03.png";
 import Spotlight from "@/components/spotlight";
+import { useLanguage } from "@/contexts/language-context";
 
 // Declarar el tipo global para window
 declare global {
@@ -15,6 +16,7 @@ declare global {
 }
 
 export default function SpecializationAreas() {
+  const { locale, t } = useLanguage();
   // Función para manejar el clic en la tarjeta de Diseño Naval
   const handleDisenoNavalClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
@@ -88,15 +90,20 @@ export default function SpecializationAreas() {
           <div className="mx-auto max-w-3xl pb-12 text-center md:pb-20">
             <div className="inline-flex items-center gap-3 pb-3 before:h-px before:w-8 before:bg-linear-to-r before:from-transparent before:to-indigo-200/50 after:h-px after:w-8 after:bg-linear-to-l after:from-transparent after:to-indigo-200/50">
               <span className="inline-flex bg-linear-to-r from-indigo-500 to-indigo-200 bg-clip-text text-transparent">
-                Experiencia Técnica
+                {locale === "es" ? "Experiencia Técnica" : 
+                 locale === "en" ? "Technical Experience" : 
+                 "Experiència Tècnica"}
               </span>
             </div>
             <h2 className="animate-[gradient_6s_linear_infinite] bg-[linear-gradient(to_right,var(--color-gray-200),var(--color-indigo-200),var(--color-gray-50),var(--color-indigo-300),var(--color-gray-200))] bg-[length:200%_auto] bg-clip-text pb-4 font-nacelle text-3xl font-semibold text-transparent md:text-4xl">
-              Áreas de Especialización
+              {locale === "es" ? "Áreas de Especialización" : 
+               locale === "en" ? "Areas of Specialization" : 
+               "Àrees d'Especialització"}
             </h2>
             <p className="text-lg text-indigo-200/65">
-              Competencias técnicas y experiencia en diferentes campos de la ingeniería naval y oceánica,
-              desarrolladas a lo largo de más de dos décadas de trayectoria profesional.
+              {locale === "es" ? "Competencias técnicas y experiencia en diferentes campos de la ingeniería naval y oceánica, desarrolladas a lo largo de más de dos décadas de trayectoria profesional." : 
+               locale === "en" ? "Technical competencies and experience in different fields of naval and ocean engineering, developed over more than two decades of professional career." : 
+               "Competències tècniques i experiència en diferents camps de l'enginyeria naval i oceànica, desenvolupades al llarg de més de dues dècades de trajectòria professional."}
             </p>
           </div>
           {/* Spotlight items */}
@@ -138,12 +145,16 @@ export default function SpecializationAreas() {
                   <div className="mb-3">
                     <span className="btn-sm relative rounded-full bg-gray-800/40 px-2.5 py-0.5 text-xs font-normal before:pointer-events-none before:absolute before:inset-0 before:rounded-[inherit] before:border before:border-transparent before:[background:linear-gradient(to_bottom,--theme(--color-gray-700/.15),--theme(--color-gray-700/.5))_border-box] before:[mask-composite:exclude_!important] before:[mask:linear-gradient(white_0_0)_padding-box,_linear-gradient(white_0_0)] hover:bg-gray-800/60">
                       <span className="bg-linear-to-r from-indigo-500 to-indigo-200 bg-clip-text text-transparent">
-                        Diseño Naval
+                        {locale === "es" ? "Diseño Naval" : 
+                         locale === "en" ? "Naval Design" : 
+                         "Disseny Naval"}
                       </span>
                     </span>
                   </div>
                   <p className="text-indigo-200/65">
-                    Diseño y cálculo estructural de embarcaciones comerciales, recreativas y plataformas offshore con software especializado.
+                    {locale === "es" ? "Diseño y cálculo estructural de embarcaciones comerciales, recreativas y plataformas offshore con software especializado." : 
+                     locale === "en" ? "Design and structural calculation of commercial and recreational vessels and offshore platforms with specialized software." : 
+                     "Disseny i càlcul estructural d'embarcacions comercials, recreatives i plataformes offshore amb programari especialitzat."}
                   </p>
                 </div>
               </div>
@@ -185,12 +196,16 @@ export default function SpecializationAreas() {
                   <div className="mb-3">
                     <span className="btn-sm relative rounded-full bg-gray-800/40 px-2.5 py-0.5 text-xs font-normal before:pointer-events-none before:absolute before:inset-0 before:rounded-[inherit] before:border before:border-transparent before:[background:linear-gradient(to_bottom,--theme(--color-gray-700/.15),--theme(--color-gray-700/.5))_border-box] before:[mask-composite:exclude_!important] before:[mask:linear-gradient(white_0_0)_padding-box,_linear-gradient(white_0_0)] hover:bg-gray-800/60">
                       <span className="bg-linear-to-r from-indigo-500 to-indigo-200 bg-clip-text text-transparent">
-                        Normativa Marítima
+                        {locale === "es" ? "Normativa Marítima" : 
+                         locale === "en" ? "Maritime Regulations" : 
+                         "Normativa Marítima"}
                       </span>
                     </span>
                   </div>
                   <p className="text-indigo-200/65">
-                    Especialista en normativa internacional (IMO, SOLAS, MARPOL) y certificaciones para embarcaciones y estructuras marinas.
+                    {locale === "es" ? "Asesoría en normativa marítima internacional, certificaciones y procesos de homologación para embarcaciones y equipos." : 
+                     locale === "en" ? "Consulting on international maritime regulations, certifications and approval processes for vessels and equipment." : 
+                     "Assessoria en normativa marítima internacional, certificacions i processos d'homologació per a embarcacions i equips."}
                   </p>
                 </div>
               </div>
@@ -232,12 +247,16 @@ export default function SpecializationAreas() {
                   <div className="mb-3">
                     <span className="btn-sm relative rounded-full bg-gray-800/40 px-2.5 py-0.5 text-xs font-normal before:pointer-events-none before:absolute before:inset-0 before:rounded-[inherit] before:border before:border-transparent before:[background:linear-gradient(to_bottom,--theme(--color-gray-700/.15),--theme(--color-gray-700/.5))_border-box] before:[mask-composite:exclude_!important] before:[mask:linear-gradient(white_0_0)_padding-box,_linear-gradient(white_0_0)] hover:bg-gray-800/60">
                       <span className="bg-linear-to-r from-indigo-500 to-indigo-200 bg-clip-text text-transparent">
-                        Ingeniería Offshore
+                        {locale === "es" ? "Ingeniería Offshore" : 
+                         locale === "en" ? "Offshore Engineering" : 
+                         "Enginyeria Offshore"}
                       </span>
                     </span>
                   </div>
                   <p className="text-indigo-200/65">
-                    Desarrollo de soluciones para plataformas y estructuras marinas en condiciones extremas, con énfasis en seguridad y eficiencia.
+                    {locale === "es" ? "Desarrollo de soluciones para plataformas y estructuras marinas en condiciones extremas, con énfasis en seguridad y eficiencia." : 
+                     locale === "en" ? "Development of solutions for platforms and marine structures in extreme conditions, with emphasis on safety and efficiency." : 
+                     "Desenvolupament de solucions per a plataformes i estructures marines en condicions extremes, amb èmfasi en seguretat i eficiència."}
                   </p>
                 </div>
               </div>

@@ -2,8 +2,10 @@
 
 import Image from "next/image";
 import BlurredShape from "@/public/images/blurred-shape.svg";
+import { useLanguage } from "@/contexts/language-context";
 
 export default function Cta() {
+  const { locale } = useLanguage();
   return (
     <section className="relative overflow-hidden">
       <div
@@ -25,7 +27,9 @@ export default function Cta() {
               className="animate-[gradient_6s_linear_infinite] bg-[linear-gradient(to_right,var(--color-gray-200),var(--color-indigo-200),var(--color-gray-50),var(--color-indigo-300),var(--color-gray-200))] bg-[length:200%_auto] bg-clip-text pb-8 font-nacelle text-3xl font-semibold text-transparent md:text-4xl"
               data-aos="fade-up"
             >
-              Diseño y cálculo para el Mar y la Industria
+              {locale === "es" ? "Diseño y cálculo para el Mar y la Industria" :
+               locale === "en" ? "Design and Calculation for the Sea and Industry" :
+               "Disseny i càlcul per al Mar i la Indústria"}
             </h2>
             <div className="mx-auto max-w-xs sm:flex sm:max-w-none sm:justify-center">
               <div data-aos="fade-up" data-aos-delay={400}>
@@ -39,7 +43,7 @@ export default function Cta() {
                     // Hacer scroll al formulario y enfocarlo
                     setTimeout(() => {
                       const formulario = document.querySelector('#contacto h3');
-                      if (formulario && formulario.textContent?.includes('Envíanos un mensaje')) {
+                      if (formulario) {
                         formulario.scrollIntoView({ behavior: 'smooth', block: 'start' });
                         // Enfocar el primer campo del formulario
                         const nombreInput = document.querySelector('#nombre');
@@ -51,7 +55,9 @@ export default function Cta() {
                   }}
                 >
                   <span className="relative inline-flex items-center">
-                    Consultar
+                    {locale === "es" ? "Consultar" :
+                     locale === "en" ? "Inquire" :
+                     "Consultar"}
                     <span className="ml-1 tracking-normal text-white/50 transition-transform group-hover:translate-x-0.5">
                       -&gt;
                     </span>
@@ -69,7 +75,7 @@ export default function Cta() {
                     // Hacer scroll al formulario y enfocarlo
                     setTimeout(() => {
                       const formulario = document.querySelector('#contacto h3');
-                      if (formulario && formulario.textContent?.includes('Envíanos un mensaje')) {
+                      if (formulario) {
                         formulario.scrollIntoView({ behavior: 'smooth', block: 'start' });
                         // Enfocar el primer campo del formulario
                         const nombreInput = document.querySelector('#nombre');
@@ -80,7 +86,9 @@ export default function Cta() {
                     }, 500);
                   }}
                 >
-                  Contactar
+                  {locale === "es" ? "Contactar" :
+                   locale === "en" ? "Contact" :
+                   "Contactar"}
                 </a>
               </div>
             </div>

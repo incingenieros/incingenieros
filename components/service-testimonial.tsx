@@ -15,7 +15,7 @@ interface TestimonialProps {
 }
 
 export default function ServiceTestimonial({ img, clientImg, name, position, company, content, categories, category }: TestimonialProps) {
-  const [isExpanded, setIsExpanded] = useState(false);
+  // Ya no necesitamos el estado isExpanded porque eliminamos el botón "Ver más detalles"
   const [showModal, setShowModal] = useState(false);
   
   // Si la tarjeta no pertenece a la categoría seleccionada, mostrarla con opacidad reducida
@@ -60,8 +60,6 @@ export default function ServiceTestimonial({ img, clientImg, name, position, com
     <>
       <article 
         className="relative overflow-hidden rounded-2xl transition-all duration-300 bg-linear-to-br from-gray-900/50 via-gray-800/25 to-gray-900/50 p-5 backdrop-blur-xs hover:bg-indigo-600/20 before:pointer-events-none before:absolute before:inset-0 before:rounded-[inherit] before:border before:border-transparent before:[background:linear-gradient(to_right,var(--color-gray-800),var(--color-gray-700),var(--color-gray-800))_border-box] before:[mask-composite:exclude_!important] before:[mask:linear-gradient(white_0_0)_padding-box,_linear-gradient(white_0_0)] h-full flex flex-col min-h-[380px]" 
-        onMouseEnter={() => setIsExpanded(true)}
-        onMouseLeave={() => setIsExpanded(false)}
       >
         <div className="flex flex-col gap-4 flex-grow">
           <div>
@@ -94,26 +92,12 @@ export default function ServiceTestimonial({ img, clientImg, name, position, com
             </div>
           </div>
           
-          {/* Botón "Ver más" que aparece al hacer hover */}
-          <div 
-            className={`mt-4 transition-all duration-500 ${
-              isExpanded ? 'opacity-100 transform translate-y-0' : 'opacity-0 transform translate-y-4 h-0 overflow-hidden'
-            }`}
-          >
-            <button className="text-sm text-indigo-300 hover:text-indigo-200 flex items-center">
-              Ver más detalles
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </button>
-          </div>
+          {/* Se eliminó el botón "Ver más detalles" */}
         </div>
         
         {/* Efecto de brillo en el borde al hacer hover */}
         <div 
-          className={`absolute inset-0 border border-transparent transition-all duration-500 ${
-            isExpanded ? 'border-indigo-500/30 shadow-[0_0_15px_rgba(99,102,241,0.3)]' : ''
-          }`}
+          className="absolute inset-0 border border-transparent transition-all duration-500 hover:border-indigo-500/30 hover:shadow-[0_0_15px_rgba(99,102,241,0.3)]"
         ></div>
       </article>
 

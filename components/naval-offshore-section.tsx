@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import Image from "next/image";
 import BlurredShapeGray from "@/public/images/blurred-shape-gray.svg";
+import { useLanguage } from "@/contexts/language-context";
 
 // Project type definition
 interface Project {
@@ -21,15 +22,38 @@ export default function NavalOffshoreSection() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const modalRef = useRef<HTMLDivElement>(null);
+  const { locale } = useLanguage();
   
   // Categories
-  const categories = [
-    { id: 'all', name: 'Todos' },
-    { id: 'vessels', name: 'Buques y Embarcaciones' },
-    { id: 'structures', name: 'Estructuras Marítimas' },
-    { id: 'platforms', name: 'Plataformas Offshore' },
-    { id: 'operations', name: 'Operaciones Marítimas' }
-  ];
+  const getCategories = () => {
+    if (locale === "es") {
+      return [
+        { id: 'all', name: 'Todos' },
+        { id: 'vessels', name: 'Buques y Embarcaciones' },
+        { id: 'structures', name: 'Estructuras Marítimas' },
+        { id: 'platforms', name: 'Plataformas Offshore' },
+        { id: 'operations', name: 'Operaciones Marítimas' }
+      ];
+    } else if (locale === "en") {
+      return [
+        { id: 'all', name: 'All' },
+        { id: 'vessels', name: 'Ships and Vessels' },
+        { id: 'structures', name: 'Maritime Structures' },
+        { id: 'platforms', name: 'Offshore Platforms' },
+        { id: 'operations', name: 'Maritime Operations' }
+      ];
+    } else {
+      return [
+        { id: 'all', name: 'Tots' },
+        { id: 'vessels', name: 'Vaixells i Embarcacions' },
+        { id: 'structures', name: 'Estructures Marítimes' },
+        { id: 'platforms', name: 'Plataformes Offshore' },
+        { id: 'operations', name: 'Operacions Marítimes' }
+      ];
+    }
+  };
+  
+  const categories = getCategories();
   
   // Generate a gradient background based on project category
   const getCategoryGradient = (category: string) => {
@@ -79,8 +103,22 @@ export default function NavalOffshoreSection() {
     }
   };
   
-  // Sample projects data
-  const projects: Project[] = [
+  // Define common image paths to ensure consistency across languages
+  const projectImages = {
+    project1: '/images/offshore/01-buque-multiproposito.jpg',
+    project2: '/images/offshore/02-muelle-offshore.jpg',
+    project3: '/images/offshore/03-plataforma-offshore.jpg',
+    project4: '/images/offshore/04-aguas-profundas.jpg',
+    project5: '/images/offshore/05-buque-fpso.jpg',
+    project6: '/images/offshore/06-jacket-eolico.jpg',
+    project7: '/images/offshore/07--plataforma-autoelevable.jpg',
+    project8: '/images/offshore/08-exploracion-submarina.jpg'
+  };
+
+  // Get projects data based on selected language
+  const getProjects = (): Project[] => {
+    if (locale === "es") {
+      return [
     {
       id: 'project1',
       title: 'Diseño de Buque Multipropósito',
@@ -154,7 +192,7 @@ export default function NavalOffshoreSection() {
         'Mejora de capacidad operativa en condiciones extremas',
         'Extensión de ventana operativa en un 35% anual'
       ],
-      image: '/images/offshore/03-plataforma-offshore.jpg'
+      image: projectImages.project3
     },
     {
       id: 'project4',
@@ -179,7 +217,7 @@ export default function NavalOffshoreSection() {
         'Reducción de tiempo de instalación en un 40%',
         'Minimización de riesgos operacionales'
       ],
-      image: '/images/offshore/04-aguas-profundas.jpg'
+      image: projectImages.project4
     },
     {
       id: 'project5',
@@ -254,7 +292,7 @@ export default function NavalOffshoreSection() {
         'Tiempo de despliegue reducido en un 30%',
         'Versatilidad para diferentes tipos de fundaciones'
       ],
-      image: '/images/offshore/07--plataforma-autoelevable.jpg'
+      image: projectImages.project7
     },
     {
       id: 'project8',
@@ -281,7 +319,417 @@ export default function NavalOffshoreSection() {
       ],
       image: '/images/offshore/08-exploracion-submarina.jpg'
     }
-  ];
+      ];
+    } else if (locale === "en") {
+      return [
+        {
+          id: 'project1',
+          title: 'Multipurpose Vessel Design',
+          category: 'vessels',
+          description: 'Comprehensive design and structural calculation of an 85-meter multipurpose vessel for logistical support operations in extreme South Atlantic conditions.',
+          challenges: [
+            'Requirements for operation in severe weather conditions',
+            'Need for versatility for multiple cargo types',
+            'Compliance with strict international regulations',
+            'Energy consumption optimization'
+          ],
+          solutions: [
+            'Advanced hydrodynamic design to improve behavior in rough seas',
+            'Modular cargo systems for quick adaptation to different missions',
+            'Implementation of finite element analysis for structural validation',
+            'Hybrid propulsion systems for consumption reduction'
+          ],
+          results: [
+            '22% reduction in fuel consumption',
+            'Operational capability in conditions up to sea state 7',
+            'Complete certification by international classification society',
+            'Versatility for 5 different cargo configurations'
+          ],
+          image: projectImages.project1
+        },
+        {
+          id: 'project2',
+          title: 'Offshore Pier Structural Analysis',
+          category: 'structures',
+          description: 'Evaluation and structural reinforcement of an offshore pier for loading/unloading operations in moderate wave conditions, with optimization of the structure\'s service life.',
+          challenges: [
+            'Existing structure with signs of fatigue and corrosion',
+            'Need to maintain operations during intervention',
+            'Exposure to highly corrosive marine environment',
+            'Increased load requirements compared to original design'
+          ],
+          solutions: [
+            'Complete 3D modeling of the existing structure',
+            'Fatigue analysis and residual life of critical components',
+            'Design of structural reinforcements installable without interrupting operations',
+            'Advanced cathodic protection system to extend service life'
+          ],
+          results: [
+            'Service life extension for additional 25 years',
+            'Increase in operational capacity by 40%',
+            'Reduction of maintenance costs by 35%',
+            'Zero operational interruptions during reinforcement'
+          ],
+          image: projectImages.project2
+        },
+        {
+          id: 'project3',
+          title: 'Fishing Vessel Fleet Modernization',
+          category: 'vessels',
+          description: 'Comprehensive modernization program for a fleet of 12 fishing vessels, including structural reinforcement, propulsion system optimization, and implementation of advanced fishing equipment.',
+          challenges: [
+            'Vessels with over 25 years of service',
+            'Need to improve energy efficiency',
+            'Adaptation to new fishing regulations',
+            'Limited budget and tight schedule'
+          ],
+          solutions: [
+            'Comprehensive structural assessment of each vessel',
+            'Propulsion system optimization with hybrid technologies',
+            'Implementation of electronic fishing monitoring systems',
+            'Redesign of work areas to improve safety and efficiency'
+          ],
+          results: [
+            'Extension of operational life by 15 years',
+            '30% reduction in fuel consumption',
+            'Improvement in catch capacity by 25%',
+            'Full compliance with new environmental regulations'
+          ],
+          image: projectImages.project3
+        },
+        {
+          id: 'project4',
+          title: 'Floating Wind Turbine Foundation',
+          category: 'structures',
+          description: 'Design and structural analysis of floating foundations for 12MW offshore wind turbines, optimized for deep water installation in areas with high wind potential.',
+          challenges: [
+            'Water depths between 100 and 200 meters',
+            'Extreme wave and wind conditions',
+            'Need to minimize movement to optimize turbine performance',
+            'Optimization of anchoring systems'
+          ],
+          solutions: [
+            'Semi-submersible platform with optimized stability',
+            'Advanced dynamic analysis of the structure-turbine assembly',
+            'Innovative tension leg mooring system',
+            'Modular design for simplified construction and installation'
+          ],
+          results: [
+            'Stability in extreme conditions (waves up to 15m)',
+            'Reduction in construction costs by 22%',
+            'Minimization of movements below critical thresholds',
+            'Design certified for 30 years of operation'
+          ],
+          image: projectImages.project4
+        },
+        {
+          id: 'project5',
+          title: 'FPSO Vessel Conversion',
+          category: 'platforms',
+          description: 'Conversion of an oil tanker into an FPSO (Floating Production, Storage and Offloading) unit for operation in deep waters of the Gulf of Mexico, including all production systems.',
+          challenges: [
+            'Integration of production systems in limited space',
+            'Need for hull reinforcement for permanent station',
+            'Implementation of advanced safety systems',
+            'Compliance with strict environmental regulations'
+          ],
+          solutions: [
+            'Comprehensive 3D modeling for optimal space utilization',
+            'Structural reinforcement with minimal impact on existing systems',
+            'Implementation of redundant safety systems',
+            'Advanced water treatment systems for zero discharge'
+          ],
+          results: [
+            'Successful conversion completed in 18 months',
+            'Production capacity of 120,000 barrels per day',
+            'Certification for stationary operation for 25 years',
+            'Resistance to centennial storm conditions'
+          ],
+          image: projectImages.project5
+        },
+        {
+          id: 'project6',
+          title: 'Jacket Structure Design for Wind Farm',
+          category: 'structures',
+          description: 'Design and analysis of jacket structures to support 8MW offshore wind turbines in a wind farm with variable depths.',
+          challenges: [
+            'Water depths between 35 and 50 meters',
+            'Combined dynamic loads from wind, waves and turbine operation',
+            'Variable characteristics marine soils',
+            'Requirement for 30-year service life with minimal maintenance'
+          ],
+          solutions: [
+            'Parametric design adaptable to different depths',
+            'Coupled dynamic analysis of structure-turbine interaction',
+            'Optimization of pile configuration according to soil characteristics',
+            'Long-lasting corrosion protection system'
+          ],
+          results: [
+            '18% reduction in structural material compared to conventional designs',
+            'Optimized natural frequencies to avoid resonances',
+            'Simplified installation procedures',
+            'Complete certification for extreme North Sea conditions'
+          ],
+          image: projectImages.project6
+        },
+        {
+          id: 'project7',
+          title: 'Self-Elevating Platform for Renewable Energy',
+          category: 'platforms',
+          description: 'Design of a specialized self-elevating platform for offshore wind turbine installation, with capacity to operate at variable depths and adverse conditions.',
+          challenges: [
+            'Lifting capacity for heavy components (up to 1,200 tons)',
+            'Operation in depths from 15 to 60 meters',
+            'Stability during precision operations',
+            'Mobility and positioning in different sea conditions'
+          ],
+          solutions: [
+            'Reinforced leg system with variable penetration',
+            'Main crane with active motion compensation',
+            'Hull design optimized for navigation and stability',
+            'Advanced positioning and leveling systems'
+          ],
+          results: [
+            'Installation capacity for turbines up to 15MW',
+            'Operational window extended by 30%',
+            'Reduction in installation time by 25%',
+            'Full certification for North Sea and Baltic operations'
+          ],
+          image: projectImages.project7
+        },
+        {
+          id: 'project8',
+          title: 'Underwater Exploration Operations',
+          category: 'operations',
+          description: 'Planning and technical direction of underwater exploration operations for the installation of a submarine pipeline, including bathymetric studies and seabed analysis.',
+          challenges: [
+            'Complex seabed with variable geology',
+            'Depths up to 1,200 meters',
+            'Strong underwater currents',
+            'Strict environmental protection requirements'
+          ],
+          solutions: [
+            'Advanced bathymetric and geological survey',
+            'Optimization of route to minimize environmental impact',
+            'Use of ROVs with specialized sensors',
+            'Development of custom installation procedures'
+          ],
+          results: [
+            'Installation completed in record time (15% less than planned)',
+            'Zero safety incidents',
+            'Positioning accuracy within tolerances',
+            'Minimization of specialized vessel time'
+          ],
+          image: projectImages.project8
+        }
+      ];
+    } else {
+      return [
+        {
+          id: 'project1',
+          title: 'Disseny de Vaixell Multipropòsit',
+          category: 'vessels',
+          description: 'Disseny integral i càlcul estructural d\'un vaixell multipropòsit de 85 metres per a operacions de suport logístic en condicions extremes de l\'Atlàntic Sud.',
+          challenges: [
+            'Requisits d\'operació en condicions meteorològiques severes',
+            'Necessitat de versatilitat per a múltiples tipus de càrrega',
+            'Compliment de normatives internacionals estrictes',
+            'Optimització de consum energètic'
+          ],
+          solutions: [
+            'Disseny hidrodinàmic avançat per millorar comportament en mala mar',
+            'Sistemes modulars de càrrega per adaptació ràpida a diferents missions',
+            'Implementació d\'anàlisi per elements finits per validació estructural',
+            'Sistemes de propulsió híbrids per reducció de consum'
+          ],
+          results: [
+            'Reducció del 22% en consum de combustible',
+            'Capacitat operativa en condicions de fins a estat de mar 7',
+            'Certificació completa per societat de classificació internacional',
+            'Versatilitat per a 5 configuracions diferents de càrrega'
+          ],
+          image: projectImages.project1
+        },
+        {
+          id: 'project2',
+          title: 'Anàlisi Estructural de Moll Offshore',
+          category: 'structures',
+          description: 'Avaluació i reforç estructural d\'un moll offshore per a operacions de càrrega/descàrrega en condicions d\'onatge moderat, amb optimització de la vida útil de l\'estructura.',
+          challenges: [
+            'Estructura existent amb signes de fatiga i corrosió',
+            'Necessitat de mantenir operacions durant la intervenció',
+            'Exposició a ambient marí altament corrosiu',
+            'Requisits de càrrega incrementats respecte al disseny original'
+          ],
+          solutions: [
+            'Modelat 3D complet de l\'estructura existent',
+            'Anàlisi de fatiga i vida residual de components crítics',
+            'Disseny de reforços estructurals instal·lables sense interrompre operacions',
+            'Sistema de protecció catòdica avançat per estendre vida útil'
+          ],
+          results: [
+            'Extensió de vida útil per 25 anys addicionals',
+            'Increment de capacitat operativa en un 40%',
+            'Reducció de costos de manteniment en un 35%',
+            'Zero interrupcions operatives durant el reforç'
+          ],
+          image: projectImages.project2
+        },
+        {
+          id: 'project3',
+          title: 'Modernització de Flota de Vaixells Pesquers',
+          category: 'vessels',
+          description: 'Programa integral de modernització per a una flota de 12 vaixells pesquers, incloent reforç estructural, optimització del sistema de propulsió i implementació d\'equips de pesca avançats.',
+          challenges: [
+            'Vaixells amb més de 25 anys de servei',
+            'Necessitat de millorar l\'eficiència energètica',
+            'Adaptació a noves normatives pesqueres',
+            'Pressupost limitat i calendari ajustat'
+          ],
+          solutions: [
+            'Avaluació estructural completa de cada vaixell',
+            'Optimització del sistema de propulsió amb tecnologies híbrides',
+            'Implementació de sistemes electrònics de monitoratge de pesca',
+            'Redisseny d\'àrees de treball per millorar seguretat i eficiència'
+          ],
+          results: [
+            'Extensió de vida operativa en 15 anys',
+            'Reducció del 30% en consum de combustible',
+            'Millora en capacitat de captura en un 25%',
+            'Compliment total amb noves regulacions ambientals'
+          ],
+          image: projectImages.project3
+        },
+        {
+          id: 'project4',
+          title: 'Fonamentació per a Aerogenerador Flotant',
+          category: 'structures',
+          description: 'Disseny i anàlisi estructural de fonamentacions flotants per a aerogeneradors offshore de 12MW, optimitzades per a instal·lació en aigües profundes en àrees amb alt potencial eòlic.',
+          challenges: [
+            'Profunditats d\'aigua entre 100 i 200 metres',
+            'Condicions extremes d\'onatge i vent',
+            'Necessitat de minimitzar moviment per optimitzar rendiment de la turbina',
+            'Optimització de sistemes d\'ancoratge'
+          ],
+          solutions: [
+            'Plataforma semi-submergible amb estabilitat optimitzada',
+            'Anàlisi dinàmica avançada del conjunt estructura-turbina',
+            'Sistema innovador d\'amarratge de potes tensades',
+            'Disseny modular per a construcció i instal·lació simplificades'
+          ],
+          results: [
+            'Estabilitat en condicions extremes (onades fins a 15m)',
+            'Reducció en costos de construcció en un 22%',
+            'Minimització de moviments per sota de llindars crítics',
+            'Disseny certificat per a 30 anys d\'operació'
+          ],
+          image: projectImages.project4
+        },
+        {
+          id: 'project5',
+          title: 'Conversió de Vaixell FPSO',
+          category: 'platforms',
+          description: 'Conversió d\'un petrolier en una unitat FPSO (Floating Production, Storage and Offloading) per a operació en aigües profundes del Golf de Mèxic, incloent tots els sistemes de producció.',
+          challenges: [
+            'Integració de sistemes de producció en espai limitat',
+            'Necessitat de reforç del casc per a estació permanent',
+            'Implementació de sistemes avançats de seguretat',
+            'Compliment amb normatives ambientals estrictes'
+          ],
+          solutions: [
+            'Modelat 3D integral per a utilització òptima de l\'espai',
+            'Reforç estructural amb mínim impacte en sistemes existents',
+            'Implementació de sistemes redundants de seguretat',
+            'Sistemes avançats de tractament d\'aigua per a zero descàrregues'
+          ],
+          results: [
+            'Conversió exitosa completada en 18 mesos',
+            'Capacitat de producció de 120.000 barrils diaris',
+            'Certificació per a operació estacionària per 25 anys',
+            'Resistència a condicions de tempesta centenària'
+          ],
+          image: projectImages.project5
+        },
+        {
+          id: 'project6',
+          title: 'Disseny d\'Estructura Jacket per a Parc Eòlic',
+          category: 'structures',
+          description: 'Disseny i anàlisi d\'estructures tipus jacket per a suportar aerogeneradors offshore de 8MW en un parc eòlic marí amb profunditats variables.',
+          challenges: [
+            'Profunditats d\'aigua entre 35 i 50 metres',
+            'Càrregues dinàmiques combinades de vent, onades i operació de turbines',
+            'Sòls marins de característiques variables',
+            'Requisit de vida útil de 30 anys amb mínim manteniment'
+          ],
+          solutions: [
+            'Disseny paramètric adaptable a diferents profunditats',
+            'Anàlisi dinàmica acoblada d\'interacció estructura-turbina',
+            'Optimització de configuració de pilots segons característiques del sòl',
+            'Sistema de protecció contra corrosió de llarga durada'
+          ],
+          results: [
+            'Reducció de material estructural en un 18% respecte a dissenys convencionals',
+            'Freqüències naturals optimitzades per evitar ressonàncies',
+            'Procediments d\'instal·lació simplificats',
+            'Certificació completa per a condicions extremes del Mar del Nord'
+          ],
+          image: projectImages.project6
+        },
+        {
+          id: 'project7',
+          title: 'Plataforma Autoelevable per a Energies Renovables',
+          category: 'platforms',
+          description: 'Disseny d\'una plataforma autoelevable especialitzada per a instal·lació d\'aerogeneradors offshore, amb capacitat per operar en profunditats variables i condicions adverses.',
+          challenges: [
+            'Capacitat d\'elevació per a components de gran pes (fins a 1.200 tones)',
+            'Operació en profunditats de 15 a 60 metres',
+            'Estabilitat durant operacions de precisió',
+            'Mobilitat i posicionament en diferents condicions de mar'
+          ],
+          solutions: [
+            'Sistema de potes reforçades amb penetració variable',
+            'Grua principal amb compensació activa de moviments',
+            'Disseny de casc optimitzat per a navegació i estabilitat',
+            'Sistemes avançats de posicionament i anivellació'
+          ],
+          results: [
+            'Capacitat d\'instal·lació per a turbines fins a 15MW',
+            'Finestra operativa estesa en un 30%',
+            'Reducció en temps d\'instal·lació en un 25%',
+            'Certificació completa per a operacions al Mar del Nord i Bàltic'
+          ],
+          image: projectImages.project7
+        },
+        {
+          id: 'project8',
+          title: 'Operacions d\'Exploració Submarina',
+          category: 'operations',
+          description: 'Planificació i direcció tècnica d\'operacions d\'exploració submarina per a la instal·lació d\'un gasoducte submarí, incloent estudis batimètrics i anàlisi del fons marí.',
+          challenges: [
+            'Fons marí complex amb geologia variable',
+            'Profunditats fins a 1.200 metres',
+            'Forts corrents submarins',
+            'Requisits estrictes de protecció ambiental'
+          ],
+          solutions: [
+            'Estudi batimètric i geològic avançat',
+            'Optimització de ruta per minimitzar impacte ambiental',
+            'Ús de ROVs amb sensors especialitzats',
+            'Desenvolupament de procediments d\'instal·lació a mida'
+          ],
+          results: [
+            'Instal·lació completada en temps rècord (15% menys del planificat)',
+            'Zero incidents de seguretat',
+            'Precisió de posicionament dins de toleràncies',
+            'Minimització de temps d\'embarcacions especialitzades'
+          ],
+          image: projectImages.project8
+        }
+      ];
+    }
+  };
+  
+  const projects = getProjects();
   
   // Filter projects based on active category
   const filteredProjects = activeCategory === 'all' 
@@ -350,14 +798,20 @@ export default function NavalOffshoreSection() {
           <div className="mx-auto max-w-3xl pb-8 text-center md:pb-12">
             <div className="inline-flex items-center gap-3 pb-3 before:h-px before:w-8 before:bg-linear-to-r before:from-transparent before:to-indigo-200/50 after:h-px after:w-8 after:bg-linear-to-l after:from-transparent after:to-indigo-200/50">
               <span className="inline-flex bg-linear-to-r from-indigo-500 to-indigo-200 bg-clip-text text-transparent">
-                Especialidad Naval y Offshore
+                {locale === "es" ? "Especialidad Naval y Offshore" :
+                 locale === "en" ? "Naval and Offshore Specialty" :
+                 "Especialitat Naval i Offshore"}
               </span>
             </div>
             <h2 className="animate-[gradient_6s_linear_infinite] bg-[linear-gradient(to_right,var(--color-gray-200),var(--color-indigo-200),var(--color-gray-50),var(--color-indigo-300),var(--color-gray-200))] bg-[length:200%_auto] bg-clip-text pb-4 font-nacelle text-3xl font-semibold text-transparent md:text-4xl">
-              Ingeniería Naval y Tecnología Offshore
+              {locale === "es" ? "Ingeniería Naval y Tecnología Offshore" :
+               locale === "en" ? "Naval Engineering and Offshore Technology" :
+               "Enginyeria Naval i Tecnologia Offshore"}
             </h2>
             <p className="text-lg text-indigo-200/65">
-              Experiencia especializada en diseño y cálculo de buques, estructuras marítimas, plataformas offshore y operaciones en ambientes oceánicos exigentes. Soluciones técnicas avanzadas para los desafíos más complejos del sector marítimo.
+              {locale === "es" ? "Experiencia especializada en diseño y cálculo de buques, estructuras marítimas, plataformas offshore y operaciones en ambientes oceánicos exigentes. Soluciones técnicas avanzadas para los desafíos más complejos del sector marítimo." :
+               locale === "en" ? "Specialized experience in design and calculation of ships, maritime structures, offshore platforms and operations in demanding ocean environments. Advanced technical solutions for the most complex challenges in the maritime sector." :
+               "Experiència especialitzada en disseny i càlcul de vaixells, estructures marítimes, plataformes offshore i operacions en ambients oceànics exigents. Solucions tècniques avançades per als reptes més complexos del sector marítim."}
             </p>
           </div>
           
@@ -399,7 +853,9 @@ export default function NavalOffshoreSection() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-gray-900/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-4">
                     <span className="text-white font-medium text-sm">
-                      Ver detalles del proyecto
+                      {locale === "es" ? "Ver detalles del proyecto" :
+                       locale === "en" ? "View project details" :
+                       "Veure detalls del projecte"}
                     </span>
                   </div>
                 </div>
@@ -415,7 +871,9 @@ export default function NavalOffshoreSection() {
                       {categories.find(c => c.id === project.category)?.name}
                     </span>
                     <button className="flex items-center text-xs text-indigo-300 transition-colors group-hover:text-indigo-200">
-                      Ver detalles
+                      {locale === "es" ? "Ver detalles" :
+                       locale === "en" ? "View details" :
+                       "Veure detalls"}
                       <svg className="ml-1 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8-8-8z" />
                       </svg>
@@ -464,7 +922,11 @@ export default function NavalOffshoreSection() {
                 </div>
                 
                 <div className="mb-6">
-                  <h4 className="mb-2 font-medium text-indigo-300">Descripción del Proyecto</h4>
+                  <h4 className="mb-2 font-medium text-indigo-300">
+                    {locale === "es" ? "Descripción del Proyecto" :
+                     locale === "en" ? "Project Description" :
+                     "Descripció del Projecte"}
+                  </h4>
                   <p className="text-indigo-200/65">
                     {selectedProject.description}
                   </p>
@@ -472,7 +934,11 @@ export default function NavalOffshoreSection() {
                 
                 <div className="grid gap-6 md:grid-cols-3">
                   <div>
-                    <h4 className="mb-2 font-medium text-indigo-300">Desafíos</h4>
+                    <h4 className="mb-2 font-medium text-indigo-300">
+                      {locale === "es" ? "Desafíos" :
+                       locale === "en" ? "Challenges" :
+                       "Reptes"}
+                    </h4>
                     <ul className="space-y-2">
                       {selectedProject.challenges.map((challenge, index) => (
                         <li key={index} className="flex items-start text-sm text-indigo-200/65">
@@ -486,7 +952,11 @@ export default function NavalOffshoreSection() {
                   </div>
                   
                   <div>
-                    <h4 className="mb-2 font-medium text-indigo-300">Soluciones</h4>
+                    <h4 className="mb-2 font-medium text-indigo-300">
+                      {locale === "es" ? "Soluciones" :
+                       locale === "en" ? "Solutions" :
+                       "Solucions"}
+                    </h4>
                     <ul className="space-y-2">
                       {selectedProject.solutions.map((solution, index) => (
                         <li key={index} className="flex items-start text-sm text-indigo-200/65">
@@ -500,7 +970,11 @@ export default function NavalOffshoreSection() {
                   </div>
                   
                   <div>
-                    <h4 className="mb-2 font-medium text-indigo-300">Resultados</h4>
+                    <h4 className="mb-2 font-medium text-indigo-300">
+                      {locale === "es" ? "Resultados" :
+                       locale === "en" ? "Results" :
+                       "Resultats"}
+                    </h4>
                     <ul className="space-y-2">
                       {selectedProject.results.map((result, index) => (
                         <li key={index} className="flex items-start text-sm text-indigo-200/65">
@@ -519,7 +993,9 @@ export default function NavalOffshoreSection() {
                     onClick={() => setIsModalOpen(false)}
                     className="inline-flex items-center justify-center rounded-md bg-indigo-500 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                   >
-                    Cerrar detalles
+                    {locale === "es" ? "Cerrar detalles" :
+                     locale === "en" ? "Close details" :
+                     "Tancar detalls"}
                   </button>
                 </div>
               </div>
