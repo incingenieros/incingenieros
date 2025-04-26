@@ -1,3 +1,6 @@
+"use client";
+
+import { useLanguage } from "@/contexts/language-context";
 import HeroImage1 from "@/public/images/naval-engineer-hero.jpg";
 import HeroImage2 from "@/public/images/naval-engineer-2.jpg";
 import HeroImage3 from "@/public/images/naval-engineer-3.jpg";
@@ -6,7 +9,39 @@ import FeaturedProjects from "@/components/featured-projects";
 import AnimatedCounters from "@/components/animated-counters";
 import AnimatedCounters2 from "@/components/animated-counters2";
 
+// Definir las traducciones para el componente Hero
+const heroTranslations = {
+  es: {
+    title: "Ingeniero Naval y Oceánico",
+    description: "Con más de 20 Años de Experiencia, brindo soluciones técnicas y asesoramiento especializado para el sector marítimo, offshore e industrial.",
+    viewWorkButton: "Ver mi Trabajo",
+    contactButton: "Contáctame",
+    imageAlt: "Ingeniero naval en astillero con planos de proyectos"
+  },
+  en: {
+    title: "Naval and Ocean Engineer",
+    description: "With over 20 Years of Experience, I provide technical solutions and specialized consulting for the maritime, offshore and industrial sectors.",
+    viewWorkButton: "View my Work",
+    contactButton: "Contact me",
+    imageAlt: "Naval engineer at shipyard with project blueprints"
+  },
+  ca: {
+    title: "Enginyer Naval i Oceànic",
+    description: "Amb més de 20 Anys d'Experiència, ofereixo solucions tècniques i assessorament especialitzat per al sector marítim, offshore i industrial.",
+    viewWorkButton: "Veure el meu Treball",
+    contactButton: "Contacta'm",
+    imageAlt: "Enginyer naval a la drassana amb plànols de projectes"
+  }
+};
+
 export default function HeroHome() {
+  // Obtener el idioma actual del contexto
+  const { locale } = useLanguage();
+  
+  // Seleccionar las traducciones según el idioma actual
+  const lang = locale === "ca" ? "ca" : locale === "en" ? "en" : "es";
+  const translations = heroTranslations[lang];
+  
   return (
     <section id="inicio" className="scroll-mt-24">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
@@ -18,7 +53,7 @@ export default function HeroHome() {
               className="animate-[gradient_6s_linear_infinite] bg-[linear-gradient(to_right,var(--color-gray-200),var(--color-indigo-200),var(--color-gray-50),var(--color-indigo-300),var(--color-gray-200))] bg-[length:200%_auto] bg-clip-text pb-5 font-nacelle text-4xl font-semibold text-transparent md:text-5xl"
               data-aos="fade-up"
             >
-              Ingeniero Naval y Oceánico
+              {translations.title}
             </h1>
             <div className="mx-auto max-w-3xl">
               <p
@@ -26,8 +61,7 @@ export default function HeroHome() {
                 data-aos="fade-up"
                 data-aos-delay={200}
               >
-                Con más de 20 Años de Experiencia, brindo soluciones técnicas y asesoramiento especializado 
-                para el sector marítimo, offshore e industrial. 
+                {translations.description}
               </p>
               <div className="mx-auto max-w-xs sm:flex sm:max-w-none sm:justify-center">
                 <div data-aos="fade-up" data-aos-delay={400}>
@@ -36,7 +70,7 @@ export default function HeroHome() {
                     href="#industrial"
                   >
                     <span className="relative inline-flex items-center">
-                      Ver mi Trabajo
+                      {translations.viewWorkButton}
                       <span className="ml-1 tracking-normal text-white/50 transition-transform group-hover:translate-x-0.5">
                         -&gt;
                       </span>
@@ -48,7 +82,7 @@ export default function HeroHome() {
                     className="btn relative w-full bg-linear-to-b from-gray-800 to-gray-800/60 bg-[length:100%_100%] bg-[bottom] text-gray-300 before:pointer-events-none before:absolute before:inset-0 before:rounded-[inherit] before:border before:border-transparent before:[background:linear-gradient(to_right,var(--color-gray-800),var(--color-gray-700),var(--color-gray-800))_border-box] before:[mask-composite:exclude_!important] before:[mask:linear-gradient(white_0_0)_padding-box,_linear-gradient(white_0_0)] hover:bg-[length:100%_150%] sm:ml-4 sm:w-auto"
                     href="#contacto"
                   >
-                    Contáctame
+                    {translations.contactButton}
                   </a>
                 </div>
               </div>
@@ -62,7 +96,7 @@ export default function HeroHome() {
                 images={[HeroImage1, HeroImage2, HeroImage3, HeroImage4]}
                 imageWidth={1104}
                 imageHeight={576}
-                imageAlt="Ingeniero naval en astillero con planos de proyectos"
+                imageAlt={translations.imageAlt}
               />
               
               {/* Contadores para dispositivos móviles (dentro de la imagen del Hero) */}
