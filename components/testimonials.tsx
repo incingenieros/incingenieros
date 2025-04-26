@@ -315,19 +315,46 @@ const testimonials = [
   },
 ];
 
+// Definir la interfaz para el tipo de testimonio
+interface Testimonial {
+  img: any;
+  clientImg: any;
+  name: string;
+  position: string;
+  company: string;
+  content: string;
+  categories: number[];
+  translationKey?: string;
+}
+
 export default function Testimonials() {
   const masonryContainer = useMasonry();
   const [category, setCategory] = useState<number>(1);
-  const [filteredTestimonials, setFilteredTestimonials] = useState(testimonials);
+  const [filteredTestimonials, setFilteredTestimonials] = useState<Testimonial[]>(testimonials);
   const { locale } = useLanguage();
   
   // Función para obtener el testimonio traducido según el idioma seleccionado
-  const getTranslatedTestimonial = (testimonial) => {
+  const getTranslatedTestimonial = (testimonial: Testimonial): Testimonial => {
     // Obtener el idioma actual
     const lang = locale === "ca" ? "ca" : locale === "en" ? "en" : "es";
     
+    // Definir el tipo para las traducciones
+    type TranslationKey = "testimonial1" | "testimonial2" | "testimonial3" | "testimonial4" | 
+                          "testimonial5" | "testimonial6" | "testimonial7" | "testimonial8" | "testimonial9";
+    
+    type TranslationsMap = {
+      [key in TranslationKey]: {
+        [lang: string]: {
+          name: string;
+          position: string;
+          company: string;
+          content?: string;
+        }
+      }
+    };
+    
     // Crear un mapa de traducciones para acceder dinámicamente
-    const translationsMap = {
+    const translationsMap: TranslationsMap = {
       "testimonial1": testimonial1Translations,
       "testimonial2": testimonial2Translations,
       "testimonial3": testimonial3Translations,
@@ -340,17 +367,22 @@ export default function Testimonials() {
     };
     
     // Verificar si existe una traducción para este testimonio
-    if (testimonial.translationKey && translationsMap[testimonial.translationKey]) {
-      const translations = translationsMap[testimonial.translationKey];
+    if (testimonial.translationKey && testimonial.translationKey in translationsMap) {
+      // Usar aserción de tipo para garantizar que TypeScript reconozca la clave como válida
+      const key = testimonial.translationKey as TranslationKey;
+      const translations = translationsMap[key];
       console.log(`Traduciendo ${testimonial.translationKey} a ${lang}`);
       
-      return {
-        ...testimonial,
-        name: translations[lang].name,
-        position: translations[lang].position,
-        company: translations[lang].company,
-        content: translations[lang].content
-      };
+      // Verificar que el idioma existe en las traducciones
+      if (lang in translations) {
+        return {
+          ...testimonial,
+          name: translations[lang].name,
+          position: translations[lang].position,
+          company: translations[lang].company,
+          content: translations[lang].content || testimonial.content
+        };
+      }
     }
     
     return testimonial;
