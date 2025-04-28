@@ -1,0 +1,70 @@
+/* Estilos específicos para el panel de administración */
+
+/* Ocultar TODOS los elementos del sitio principal */
+header:not(.bg-gray-900) {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  position: absolute !important;
+  z-index: -1000 !important;
+}
+
+/* Asegurar que el panel de administración ocupe toda la pantalla */
+.admin-only-container {
+  min-height: 100vh;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+}
+
+.admin-dashboard-container {
+  position: relative;
+  z-index: 1000;
+}
+
+/* Evitar que cualquier elemento del sitio principal afecte al panel de administración */
+body > div:not(.admin-dashboard-container) > header,
+body > header,
+body > div > header:not(.bg-gray-900) {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+}
+
+/* Forzar la ocultación de cualquier menú del sitio principal */
+nav:not([class*="admin"]) {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+/* Resetear cualquier estilo que pueda estar interfiriendo */
+body.admin-page {
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+  position: relative;
+}
+
+/* Estilos específicos cuando se activa la clase admin-only */
+body.admin-only header:not(.bg-gray-900) {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  height: 0 !important;
+  width: 0 !important;
+  overflow: hidden !important;
+  position: absolute !important;
+  z-index: -9999 !important;
+  pointer-events: none !important;
+}
+
+/* Ocultar específicamente el componente Header del sitio principal */
+div[class*="client-layout"] > header,
+div[class*="ClientLayout"] > header {
+  display: none !important;
+}
