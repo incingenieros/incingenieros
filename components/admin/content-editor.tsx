@@ -3,8 +3,99 @@
 import { useState } from "react";
 import { useLanguage } from "@/contexts/language-context";
 
+// Definir tipos para el contenido
+type ContentLanguage = 'es' | 'en' | 'ca';
+
+// Interfaz para textos traducidos
+interface TranslatedText {
+  es: string;
+  en: string;
+  ca: string;
+}
+
+// Interfaz para las secciones del editor
+interface EditorSections {
+  [key: string]: TranslatedText;
+}
+
+// Interfaz para los idiomas del editor
+interface EditorLanguages {
+  es: TranslatedText;
+  en: TranslatedText;
+  ca: TranslatedText;
+}
+
+// Interfaz para el objeto editorText
+interface EditorText {
+  title: TranslatedText;
+  description: TranslatedText;
+  mainTitle: TranslatedText;
+  subtitle: TranslatedText;
+  button: TranslatedText;
+  sections: EditorSections;
+  languages: EditorLanguages;
+  save: TranslatedText;
+  saved: TranslatedText;
+}
+
+interface ServiceItem {
+  title?: string;
+  description?: string;
+  icon?: string;
+}
+
+interface ProjectItem {
+  title?: string;
+  description?: string;
+  category?: string;
+  image?: string;
+}
+
+interface TestimonialItem {
+  name?: string;
+  company?: string;
+  text?: string;
+  image?: string;
+}
+
+interface SpecializationItem {
+  title?: string;
+  description?: string;
+}
+
+interface ContentItem {
+  title?: string;
+  subtitle?: string;
+  description?: string;
+  button?: string;
+  buttonLink?: string;
+  buttonText?: string;
+  email?: string;
+  phone?: string;
+  address?: string;
+  backgroundImage?: string;
+  services?: ServiceItem[];
+  projects?: ProjectItem[];
+  items?: SpecializationItem[];
+  testimonials?: TestimonialItem[];
+  categories?: string[];
+  formNameLabel?: string;
+  formEmailLabel?: string;
+  formMessageLabel?: string;
+  formButtonText?: string;
+  [key: string]: any;
+}
+
+type SectionContent = {
+  [key in ContentLanguage]?: ContentItem;
+};
+
+type Content = {
+  [section: string]: SectionContent;
+};
+
 export default function ContentEditor() {
-  const { locale } = useLanguage();
+  const { locale = 'es' } = useLanguage() || {};
   const [activeTab, setActiveTab] = useState("hero");
 
   // Secciones del sitio web basadas en la estructura real
@@ -21,7 +112,7 @@ export default function ContentEditor() {
   const [saved, setSaved] = useState(false);
 
   // Traducciones para el editor de contenido
-  const editorText = {
+  const editorText: EditorText = {
     title: {
       es: "Editor de Contenido",
       en: "Content Editor",
@@ -121,7 +212,7 @@ export default function ContentEditor() {
   };
 
   // Contenido inicial para cada sección en diferentes idiomas
-  const [content, setContent] = useState({
+  const [content, setContent] = useState<Content>({
     hero: {
       es: {
         title: "Ing. Francisco Arrazola Méndez",
@@ -619,7 +710,7 @@ export default function ContentEditor() {
   // Manejar cambios en los campos de texto
   const handleChange = (
     section: string,
-    language: string,
+    language: ContentLanguage,
     field: string,
     value: string
   ) => {
@@ -636,7 +727,7 @@ export default function ContentEditor() {
       [section]: {
         ...content[section],
         [language]: {
-          ...content[section][language],
+          ...(content[section][language as ContentLanguage] || {}),
           [field]: value,
         },
       },
@@ -656,16 +747,17 @@ export default function ContentEditor() {
   // Renderizar campos de edición para la sección activa
   const renderEditorFields = () => {
     // Asegurar que la sección activa existe en el contenido
-    const sectionContent = content[activeTab] || {};
-    if (!sectionContent.es)
+    const sectionContent = content[activeTab] || { es: {}, en: {}, ca: {} };
+    if (!sectionContent || !sectionContent.es) {
       return (
         <div className="text-center p-6 text-indigo-300">
           Esta sección aún no está configurada
         </div>
       );
+    }
 
     // Determinar qué campos mostrar en la vista principal (los más importantes)
-    const getPrimaryFields = (section) => {
+    const getPrimaryFields = (section: string) => {
       const commonFields = ["title", "subtitle", "description"];
 
       switch (section) {
@@ -683,12 +775,15 @@ export default function ContentEditor() {
         case "contact":
           return [...commonFields, "email", "phone", "address"];
         default:
-          return Object.keys(sectionContent.es).filter(
-            (field) =>
-              typeof sectionContent.es[field] === "string" &&
-              !field.includes("Image") &&
-              !field.includes("icon")
-          );
+          if (sectionContent.es) {
+            return Object.keys(sectionContent.es).filter(
+              (field) =>
+                typeof sectionContent.es?.[field] === "string" &&
+                !field.includes("Image") &&
+                !field.includes("icon")
+            );
+          }
+          return commonFields;
       }
     };
 
@@ -707,10 +802,10 @@ export default function ContentEditor() {
 
       const currentContent =
         locale === "es"
-          ? sectionContent.es
+          ? sectionContent.es || {}
           : locale === "en"
-          ? sectionContent.en
-          : sectionContent.ca;
+          ? sectionContent.en || {}
+          : sectionContent.ca || {};
 
       switch (activeTab) {
         case "hero":
@@ -723,16 +818,16 @@ export default function ContentEditor() {
                 <div className="absolute inset-0 opacity-20 bg-gradient-to-r from-indigo-500 to-purple-600"></div>
                 <div className="relative z-10">
                   <h2 className="text-2xl font-bold text-white mb-2">
-                    {sectionContent.es.title || ""}
+                    {sectionContent.es?.title || ""}
                   </h2>
                   <p className="text-lg text-indigo-200 mb-4">
-                    {sectionContent.es.subtitle || ""}
+                    {sectionContent.es?.subtitle || ""}
                   </p>
                   <p className="text-indigo-300 mb-6">
-                    {sectionContent.es.description || ""}
+                    {sectionContent.es?.description || ""}
                   </p>
                   <button className="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 transition-colors">
-                    {sectionContent.es.button || "Contactar"}
+                    {sectionContent.es?.button || "Contactar"}
                   </button>
                 </div>
               </div>
@@ -746,16 +841,16 @@ export default function ContentEditor() {
               </h3>
               <div className="bg-gray-900 p-6 rounded-lg">
                 <h2 className="text-xl font-bold text-white mb-2">
-                  {currentContent.title || ""}
+                  {currentContent?.title || ""}
                 </h2>
                 <p className="text-indigo-200 mb-2">
-                  {currentContent.subtitle || ""}
+                  {currentContent?.subtitle || ""}
                 </p>
                 <p className="text-indigo-300 mb-6">
-                  {currentContent.description || ""}
+                  {currentContent?.description || ""}
                 </p>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  {currentContent.services?.map((service, index) => (
+                  {currentContent?.services?.map((service: ServiceItem, index) => (
                     <div key={index} className="bg-gray-800 p-4 rounded-lg">
                       <h3 className="font-medium text-white mb-2">
                         {service.title || ""}
@@ -777,17 +872,17 @@ export default function ContentEditor() {
               </h3>
               <div className="bg-gray-900 p-6 rounded-lg">
                 <h2 className="text-xl font-bold text-white mb-2">
-                  {currentContent.title || ""}
+                  {currentContent?.title || ""}
                 </h2>
                 <p className="text-indigo-200 mb-2">
-                  {currentContent.subtitle || ""}
+                  {currentContent?.subtitle || ""}
                 </p>
                 <p className="text-indigo-300 mb-6">
-                  {currentContent.description || ""}
+                  {currentContent?.description || ""}
                 </p>
-                {currentContent.items && (
+                {currentContent?.items && (
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
-                    {currentContent.items.map((item, index) => (
+                    {currentContent.items?.map((item: SpecializationItem, index) => (
                       <div key={index} className="bg-gray-800 p-4 rounded-lg">
                         <h3 className="font-medium text-white mb-2">
                           {item.title || ""}
@@ -810,23 +905,23 @@ export default function ContentEditor() {
               </h3>
               <div className="bg-gray-900 p-6 rounded-lg">
                 <h2 className="text-xl font-bold text-white mb-2">
-                  {currentContent.title || ""}
+                  {currentContent?.title || ""}
                 </h2>
                 <p className="text-indigo-200 mb-2">
-                  {currentContent.subtitle || ""}
+                  {currentContent?.subtitle || ""}
                 </p>
                 <p className="text-indigo-300 mb-6">
-                  {currentContent.description || ""}
+                  {currentContent?.description || ""}
                 </p>
-                {currentContent.projects && (
+                {currentContent?.projects && (
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
-                    {currentContent.projects.map((projects, index) => (
+                    {currentContent.projects?.map((project: ProjectItem, index) => (
                       <div key={index} className="bg-gray-800 p-4 rounded-lg">
                         <h3 className="font-medium text-white mb-2">
-                          {projects.title || ""}
+                          {project.title || ""}
                         </h3>
                         <p className="text-sm text-indigo-200">
-                          {projects.description || ""}
+                          {project.description || ""}
                         </p>
                       </div>
                     ))}
@@ -843,13 +938,13 @@ export default function ContentEditor() {
               </h3>
               <div className="bg-gray-900 p-6 rounded-lg">
                 <h2 className="text-xl font-bold text-white mb-2">
-                  {sectionContent.es.title || ""}
+                  {sectionContent.es?.title || ""}
                 </h2>
                 <p className="text-indigo-200 mb-2">
-                  {sectionContent.es.subtitle || ""}
+                  {sectionContent.es?.subtitle || ""}
                 </p>
                 <p className="text-indigo-300">
-                  {sectionContent.es.description || ""}
+                  {sectionContent.es?.description || ""}
                 </p>
               </div>
             </div>
@@ -862,11 +957,11 @@ export default function ContentEditor() {
               </h3>
               <div className="bg-gray-900 p-6 rounded-lg">
                 <h2 className="text-xl font-bold text-white mb-4">
-                  {sectionContent.es.title || ""}
+                  {sectionContent.es?.title || ""}
                 </h2>
                 <div className="bg-gray-800 p-4 rounded-lg">
                   <p className="text-indigo-200 italic mb-4">
-                    "{sectionContent.es.description || ""}"
+                    "{sectionContent.es?.description || ""}"
                   </p>
                   <p className="text-white font-medium">Cliente satisfecho</p>
                 </div>
@@ -881,13 +976,13 @@ export default function ContentEditor() {
               </h3>
               <div className="bg-gray-900 p-6 rounded-lg">
                 <h2 className="text-xl font-bold text-white mb-2">
-                  {sectionContent.es.title || ""}
+                  {sectionContent.es?.title || ""}
                 </h2>
                 <p className="text-indigo-200 mb-4">
-                  {sectionContent.es.description || ""}
+                  {sectionContent.es?.description || ""}
                 </p>
                 <div className="space-y-2 text-indigo-300">
-                  {sectionContent.es.email && (
+                  {sectionContent.es?.email && (
                     <p className="flex items-center">
                       <svg
                         className="w-4 h-4 mr-2"
@@ -897,10 +992,10 @@ export default function ContentEditor() {
                         <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path>
                         <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>
                       </svg>
-                      {sectionContent.es.email}
+                      {sectionContent.es?.email}
                     </p>
                   )}
-                  {sectionContent.es.phone && (
+                  {sectionContent.es?.phone && (
                     <p className="flex items-center">
                       <svg
                         className="w-4 h-4 mr-2"
@@ -909,10 +1004,10 @@ export default function ContentEditor() {
                       >
                         <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"></path>
                       </svg>
-                      {sectionContent.es.phone}
+                      {sectionContent.es?.phone}
                     </p>
                   )}
-                  {sectionContent.es.address && (
+                  {sectionContent.es?.address && (
                     <p className="flex items-center">
                       <svg
                         className="w-4 h-4 mr-2"
@@ -925,7 +1020,7 @@ export default function ContentEditor() {
                           clipRule="evenodd"
                         ></path>
                       </svg>
-                      {sectionContent.es.address}
+                      {sectionContent.es?.address}
                     </p>
                   )}
                 </div>
@@ -943,10 +1038,10 @@ export default function ContentEditor() {
         <div className="bg-gray-800 rounded-lg p-6">
           <h3 className="text-xl font-semibold text-indigo-300 mb-2">
             {locale === "es"
-              ? editorText.sections[activeTab]?.es || activeTab
+              ? editorText.sections?.[activeTab]?.es || activeTab
               : locale === "en"
-              ? editorText.sections[activeTab]?.en || activeTab
-              : editorText.sections[activeTab]?.ca || activeTab}
+              ? editorText.sections?.[activeTab]?.en || activeTab
+              : editorText.sections?.[activeTab]?.ca || activeTab}
           </h3>
           <p className="text-indigo-200/65 mb-4">
             {locale === "es"
@@ -967,15 +1062,15 @@ export default function ContentEditor() {
             <h3 className="text-lg font-medium text-indigo-300 mb-4 flex items-center">
               <span className="inline-block w-6 h-4 bg-red-500 mr-2 rounded"></span>
               {locale === "es"
-                ? editorText.languages.es.es
+                ? editorText.languages?.es?.es || "Español"
                 : locale === "en"
-                ? editorText.languages.es.en
-                : editorText.languages.es.ca}
+                ? editorText.languages?.es?.en || "Spanish"
+                : editorText.languages?.es?.ca || "Espanyol"}
             </h3>
             <div className="space-y-4">
               {primaryFields.map((field) => {
                 // Verificar si el campo existe
-                if (!sectionContent.es.hasOwnProperty(field)) return null;
+                if (!sectionContent.es?.hasOwnProperty(field)) return null;
 
                 return (
                   <div key={`es-${field}`}>
@@ -985,7 +1080,7 @@ export default function ContentEditor() {
                     </label>
                     {field === "description" ? (
                       <textarea
-                        value={sectionContent.es[field] || ""}
+                        value={sectionContent.es?.[field] || ""}
                         onChange={(e) =>
                           handleChange(activeTab, "es", field, e.target.value)
                         }
@@ -995,7 +1090,7 @@ export default function ContentEditor() {
                     ) : (
                       <input
                         type="text"
-                        value={sectionContent.es[field] || ""}
+                        value={sectionContent.es?.[field] || ""}
                         onChange={(e) =>
                           handleChange(activeTab, "es", field, e.target.value)
                         }
@@ -1013,15 +1108,15 @@ export default function ContentEditor() {
             <h3 className="text-lg font-medium text-indigo-300 mb-4 flex items-center">
               <span className="inline-block w-6 h-4 bg-blue-500 mr-2 rounded"></span>
               {locale === "es"
-                ? editorText.languages.en.es
+                ? editorText.languages?.en?.es || "Inglés"
                 : locale === "en"
-                ? editorText.languages.en.en
-                : editorText.languages.en.ca}
+                ? editorText.languages?.en?.en || "English"
+                : editorText.languages?.en?.ca || "Anglès"}
             </h3>
             <div className="space-y-4">
               {primaryFields.map((field) => {
                 // Verificar si el campo existe
-                if (!sectionContent.en.hasOwnProperty(field)) return null;
+                if (!sectionContent.en?.hasOwnProperty(field)) return null;
 
                 return (
                   <div key={`en-${field}`}>
@@ -1031,7 +1126,7 @@ export default function ContentEditor() {
                     </label>
                     {field === "description" ? (
                       <textarea
-                        value={sectionContent.en[field] || ""}
+                        value={sectionContent.en?.[field] || ""}
                         onChange={(e) =>
                           handleChange(activeTab, "en", field, e.target.value)
                         }
@@ -1041,7 +1136,7 @@ export default function ContentEditor() {
                     ) : (
                       <input
                         type="text"
-                        value={sectionContent.en[field] || ""}
+                        value={sectionContent.en?.[field] || ""}
                         onChange={(e) =>
                           handleChange(activeTab, "en", field, e.target.value)
                         }
@@ -1059,15 +1154,15 @@ export default function ContentEditor() {
             <h3 className="text-lg font-medium text-indigo-300 mb-4 flex items-center">
               <span className="inline-block w-6 h-4 bg-yellow-500 mr-2 rounded"></span>
               {locale === "es"
-                ? editorText.languages.ca.es
+                ? editorText.languages?.ca?.es || "Catalán"
                 : locale === "en"
-                ? editorText.languages.ca.en
-                : editorText.languages.ca.ca}
+                ? editorText.languages?.ca?.en || "Catalan"
+                : editorText.languages?.ca?.ca || "Català"}
             </h3>
             <div className="space-y-4">
               {primaryFields.map((field) => {
                 // Verificar si el campo existe
-                if (!sectionContent.ca.hasOwnProperty(field)) return null;
+                if (!sectionContent.ca?.hasOwnProperty(field)) return null;
 
                 return (
                   <div key={`ca-${field}`}>
@@ -1077,7 +1172,7 @@ export default function ContentEditor() {
                     </label>
                     {field === "description" ? (
                       <textarea
-                        value={sectionContent.ca[field] || ""}
+                        value={sectionContent.ca?.[field] || ""}
                         onChange={(e) =>
                           handleChange(activeTab, "ca", field, e.target.value)
                         }
@@ -1087,7 +1182,7 @@ export default function ContentEditor() {
                     ) : (
                       <input
                         type="text"
-                        value={sectionContent.ca[field] || ""}
+                        value={sectionContent.ca?.[field] || ""}
                         onChange={(e) =>
                           handleChange(activeTab, "ca", field, e.target.value)
                         }
@@ -1105,8 +1200,8 @@ export default function ContentEditor() {
         {activeTab === "features" &&
           sectionContent &&
           (() => {
-            const selectedSection =
-              sectionContent[locale] || sectionContent["ca"];
+            const selectedSection: ContentItem = 
+              (sectionContent[locale as ContentLanguage] || sectionContent["ca" as ContentLanguage]) as ContentItem || {};
 
             const featuresTitle =
               locale === "es"
@@ -1116,22 +1211,22 @@ export default function ContentEditor() {
                 : "Solucions d'Enginyeria";
 
             return (
-              selectedSection.services && (
+              selectedSection?.services && (
                 <div className="bg-gray-800 rounded-lg p-6">
                   <h3 className="text-lg font-medium text-indigo-300 mb-4">
                     {featuresTitle}
                   </h3>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    {selectedSection.services.map((service, index) => (
+                    {selectedSection.services?.map((service: ServiceItem, index) => (
                       <div key={index} className="bg-gray-700 p-4 rounded-lg">
                         <h4 className="font-medium text-white mb-2">
-                          {service.title}
+                          {service.title || ""}
                         </h4>
                         <p className="text-sm text-indigo-200/65">
-                          {service.description}
+                          {service.description || ""}
                         </p>
                         <div className="mt-2 text-xs text-indigo-300">
-                          {service.icon}
+                          {service.icon || ""}
                         </div>
                       </div>
                     ))}
@@ -1145,12 +1240,12 @@ export default function ContentEditor() {
         {activeTab === "specialization" &&
           sectionContent &&
           (() => {
-            const selectedSection =
+            const selectedSection: ContentItem =
               locale === "es"
-                ? sectionContent.es
+                ? sectionContent.es || {}
                 : locale === "en"
-                ? sectionContent.en
-                : sectionContent.ca;
+                ? sectionContent.en || {}
+                : sectionContent.ca || {};
 
             const specializationTitle =
               locale === "es"
@@ -1160,23 +1255,21 @@ export default function ContentEditor() {
                 : "Àrees d'Especialització";
 
             return (
-              selectedSection.items && (
+              selectedSection?.items && (
                 <div className="bg-gray-800 rounded-lg p-6">
                   <h3 className="text-lg font-medium text-indigo-300 mb-4">
                     {specializationTitle}
                   </h3>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    {selectedSection.items.map((item, index) => (
+                    {selectedSection.items?.map((item: SpecializationItem, index) => (
                       <div key={index} className="bg-gray-700 p-4 rounded-lg">
                         <h4 className="font-medium text-white mb-2">
-                          {item.title}
+                          {item.title || ""}
                         </h4>
                         <p className="text-sm text-indigo-200/65">
-                          {item.description}
+                          {item.description || ""}
                         </p>
-                        <div className="mt-2 text-xs text-indigo-300">
-                          {item.icon}
-                        </div>
+                        {/* No hay icono definido en la interfaz SpecializationItem */}
                       </div>
                     ))}
                   </div>
@@ -1211,18 +1304,18 @@ export default function ContentEditor() {
       {/* Encabezado del editor */}
       <div className="mb-8">
         <h2 className="text-2xl font-bold text-indigo-100 mb-2">
-          {locale === "es"
-            ? editorText.title.es
-            : locale === "en"
-            ? editorText.title.en
-            : editorText.title.ca}
+            {locale === "es"
+              ? editorText.title?.es || "Editor de Contenido"
+              : locale === "en"
+              ? editorText.title?.en || "Content Editor"
+              : editorText.title?.ca || "Editor de Contingut"}
         </h2>
         <p className="text-indigo-200/65 mb-6">
-          {locale === "es"
-            ? editorText.description.es
-            : locale === "en"
-            ? editorText.description.en
-            : editorText.description.ca}
+            {locale === "es"
+              ? editorText.description?.es || "Edición de contenido del Sitio Web"
+              : locale === "en"
+              ? editorText.description?.en || "Editing the content of the website"
+              : editorText.description?.ca || "Edició de contingut del Lloc Web"}
         </p>
       </div>
 
@@ -1263,13 +1356,13 @@ export default function ContentEditor() {
                 </div>
                 <p className="text-sm text-indigo-200/65 line-clamp-2 min-h-[40px]">
                   {content[section] &&
-                  content[section].es &&
-                  content[section].es.description
+                  content[section]?.es &&
+                  content[section]?.es?.description
                     ? locale === "es"
-                      ? content[section].es.description.substring(0, 60) + "..."
+                      ? content[section]?.es?.description?.substring(0, 60) + "..."
                       : locale === "en"
-                      ? content[section].en.description.substring(0, 60) + "..."
-                      : content[section].ca.description.substring(0, 60) + "..."
+                      ? content[section]?.en?.description?.substring(0, 60) + "..."
+                      : content[section]?.ca?.description?.substring(0, 60) + "..."
                     : "Editar contenido de esta sección"}
                 </p>
                 <div className="mt-2 text-xs text-indigo-300 flex items-center">
@@ -1281,10 +1374,10 @@ export default function ContentEditor() {
                   >
                     <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"></path>
                   </svg>
-                  {content[section] && content[section].es
+                  {content[section] && content[section]?.es
                     ? `${
-                        Object.keys(content[section].es).filter(
-                          (k) => typeof content[section].es[k] === "string"
+                        Object.keys(content[section]?.es || {}).filter(
+                          (k) => typeof content[section]?.es?.[k as keyof ContentItem] === "string"
                         ).length
                       } campos editables`
                     : "Pendiente de configurar"}
@@ -1305,19 +1398,19 @@ export default function ContentEditor() {
           className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
         >
           {locale === "es"
-            ? editorText.save.es
+            ? editorText.save?.es || "Guardar Cambios"
             : locale === "en"
-            ? editorText.save.en
-            : editorText.save.ca}
+            ? editorText.save?.en || "Save Changes"
+            : editorText.save?.ca || "Desar Canvis"}
         </button>
 
         {saved && (
           <span className="ml-4 text-green-500">
             {locale === "es"
-              ? editorText.saved.es
+              ? editorText.saved?.es || "Cambios guardados correctamente"
               : locale === "en"
-              ? editorText.saved.en
-              : editorText.saved.ca}
+              ? editorText.saved?.en || "Changes saved successfully"
+              : editorText.saved?.ca || "Canvis desats correctament"}
           </span>
         )}
       </div>
