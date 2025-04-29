@@ -6,6 +6,8 @@ import "./admin.css"
 import { Inter } from "next/font/google"
 import localFont from "next/font/local"
 import { LanguageProviderWrapper } from "../../components/language-provider-wrapper"
+import { AuthProvider } from "@/contexts/auth-context"
+import AuthGuard from "@/components/admin/auth-guard"
 
 const inter = Inter({
   subsets: ["latin"],
@@ -58,7 +60,11 @@ export default function AdminLayout({
       </head>
       <body className={`${inter.variable} ${nacelle.variable} bg-gray-950 font-inter text-base text-gray-200 antialiased admin-page`}>
         <LanguageProviderWrapper>
-          {children}
+          <AuthProvider>
+            <AuthGuard>
+              {children}
+            </AuthGuard>
+          </AuthProvider>
         </LanguageProviderWrapper>
         
         {/* Scripts personalizados para funcionalidades específicas del admin */}
