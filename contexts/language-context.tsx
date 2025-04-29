@@ -29,6 +29,10 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     const loadTranslations = async () => {
       try {
         const response = await fetch(`/locales/${locale}/translations.json`);
+        if (!response.ok) {
+          console.warn(`No se pudo cargar el archivo de traducciones para ${locale}. Usando valores predeterminados.`);
+          return;
+        }
         const data = await response.json();
         setTranslations(data);
         
@@ -39,6 +43,7 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         document.documentElement.lang = locale;
       } catch (error) {
         console.error('Error loading translations:', error);
+        // No interrumpir la aplicación si hay un error al cargar traducciones
       }
     };
 
