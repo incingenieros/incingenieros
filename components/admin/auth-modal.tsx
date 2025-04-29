@@ -113,6 +113,13 @@ export default function AuthModal({ isOpen, onCloseAction, onSuccessAction }: Au
     }
   }, [isOpen])
   
+  // Credenciales hardcodeadas para desarrollo y producción
+  // Nota: En una aplicación real, esto debería implementarse con una solución más segura
+  const validCredentials = {
+    username: 'paco@incingenieros.com',
+    password: 'Arrazola25*'
+  }
+  
   // Función para manejar el inicio de sesión
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -123,12 +130,8 @@ export default function AuthModal({ isOpen, onCloseAction, onSuccessAction }: Au
       // Simulamos una petición a un servidor con un timeout
       await new Promise(resolve => setTimeout(resolve, 500))
       
-      // Importamos el archivo JSON con las credenciales
-      const response = await fetch('/admin-auth.json')
-      const authData = await response.json()
-      
-      // Verificamos las credenciales
-      if (username === authData.username && password === authData.password) {
+      // Verificamos las credenciales directamente
+      if (username === validCredentials.username && password === validCredentials.password) {
         // Guardar en localStorage si rememberMe está activado
         if (rememberMe) {
           localStorage.setItem('adminAuth', JSON.stringify({ username, password }))
