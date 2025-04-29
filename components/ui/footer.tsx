@@ -6,6 +6,7 @@ import Image from "next/image";
 import FooterIllustration from "@/public/images/footer-illustration.svg";
 import { useLanguage } from "@/contexts/language-context";
 import Link from "next/link";
+import AdminLink from "@/components/admin/admin-link";
 
 export default function Footer() {
   const { locale } = useLanguage();
@@ -385,16 +386,9 @@ export default function Footer() {
           </div>
           
           {/* Admin Panel */}
-          <a 
-            href="/admin" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="text-xs text-indigo-400 hover:text-indigo-300 text-center cursor-pointer focus:outline-none"
-          >
-            {locale === "es" ? "Panel Admin" :
-             locale === "en" ? "Admin Panel" :
-             "Panell Admin"}
-          </a>
+          <div className="text-xs text-indigo-400 hover:text-indigo-300 text-center cursor-pointer focus:outline-none">
+            <AdminLink />
+          </div>
         </div>
         
         {/* KitDigital logo a todo el ancho */}
