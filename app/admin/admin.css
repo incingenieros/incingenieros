@@ -20,11 +20,14 @@ header:not(.bg-gray-900) {
   right: 0;
   bottom: 0;
   z-index: 9999;
+  overflow-y: auto; /* Permitir scroll vertical */
 }
 
 .admin-dashboard-container {
   position: relative;
   z-index: 1000;
+  min-height: 100vh;
+  overflow-y: auto; /* Permitir scroll vertical */
 }
 
 /* Evitar que cualquier elemento del sitio principal afecte al panel de administración */
@@ -44,7 +47,7 @@ nav:not([class*="admin"]) {
 
 /* Resetear cualquier estilo que pueda estar interfiriendo */
 body.admin-page {
-  overflow: hidden;
+  overflow: auto; /* Permitir scroll */
   height: 100vh;
   width: 100vw;
   position: relative;
