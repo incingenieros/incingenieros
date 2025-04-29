@@ -2,12 +2,16 @@
 
 import { useState, useEffect } from 'react'
 import { useLanguage } from '@/contexts/language-context'
+import { useAuth } from '@/contexts/auth-context'
+import { useRouter } from 'next/navigation'
 import AdminHeader from './admin-header'
 import AdminSidebar from './admin-sidebar'
 import ContentEditor from './content-editor'
 
 export default function Dashboard() {
   const { locale } = useLanguage()
+  const { logout } = useAuth()
+  const router = useRouter()
   const [activeSection, setActiveSection] = useState('dashboard')
   
   // Asegurar que el contenido tenga scroll
@@ -48,6 +52,11 @@ export default function Dashboard() {
       es: 'Volver al Sitio',
       en: 'Back to Site',
       ca: 'Tornar al Lloc'
+    },
+    logout: {
+      es: 'Cerrar Sesión',
+      en: 'Logout',
+      ca: 'Tancar Sessió'
     },
     overview: {
       es: 'Resumen del Sitio',
@@ -222,17 +231,36 @@ export default function Dashboard() {
                    locale === 'en' ? dashboardText.welcome.en : 
                    dashboardText.welcome.ca}
                 </h1>
-                <a
-                  href="/"
-                  className="inline-flex items-center px-4 py-2 border border-indigo-500 rounded-md shadow-sm text-sm font-medium text-indigo-300 bg-gray-800 hover:bg-indigo-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors duration-200"
-                >
-                  <svg className="mr-2 -ml-1 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                  </svg>
-                  {locale === 'es' ? dashboardText.backToSite.es : 
-                   locale === 'en' ? dashboardText.backToSite.en : 
-                   dashboardText.backToSite.ca}
-                </a>
+                <div className="flex space-x-2">
+                  <a
+                    href="/"
+                    className="inline-flex items-center px-4 py-2 border border-indigo-500 rounded-md shadow-sm text-sm font-medium text-indigo-300 bg-gray-800 hover:bg-indigo-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors duration-200"
+                  >
+                    <svg className="mr-2 -ml-1 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                    </svg>
+                    {locale === 'es' ? dashboardText.backToSite.es : 
+                     locale === 'en' ? dashboardText.backToSite.en : 
+                     dashboardText.backToSite.ca}
+                  </a>
+                  
+                  <button
+                    onClick={() => {
+                      logout();
+                      // Redirigir a la página principal
+                      window.location.href = '/';
+                      // Esto fuerza una recarga completa de la página
+                    }}
+                    className="inline-flex items-center px-4 py-2 border border-red-500 rounded-md shadow-sm text-sm font-medium text-red-300 bg-gray-800 hover:bg-red-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-colors duration-200"
+                  >
+                    <svg className="mr-2 -ml-1 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                    </svg>
+                    {locale === 'es' ? dashboardText.logout.es : 
+                     locale === 'en' ? dashboardText.logout.en : 
+                     dashboardText.logout.ca}
+                  </button>
+                </div>
               </div>
               <p className="text-indigo-200/65">
                 {new Date().toLocaleDateString(locale === 'es' ? 'es-ES' : locale === 'en' ? 'en-US' : 'ca-ES', { 
