@@ -18,9 +18,23 @@ export default function Dashboard() {
       mainContent.classList.add('overflow-auto')
     }
     
-    // Asegurar que el body tenga altura completa
+    // Asegurar que el body tenga altura completa y permita scroll
     document.body.style.height = '100%'
+    document.body.style.overflow = 'auto'
     document.documentElement.style.height = '100%'
+    document.documentElement.style.overflow = 'auto'
+    
+    // Asegurar que el contenedor del dashboard permita scroll
+    const dashboardContainer = document.querySelector('.admin-dashboard-container')
+    if (dashboardContainer) {
+      dashboardContainer.classList.add('overflow-auto')
+    }
+    
+    // Asegurar que el contenedor admin-only-container permita scroll
+    const adminContainer = document.querySelector('.admin-only-container')
+    if (adminContainer) {
+      adminContainer.classList.add('overflow-auto')
+    }
   }, [])
 
   // Traducciones para el dashboard
@@ -487,9 +501,9 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white flex flex-col admin-dashboard-container">
+    <div className="min-h-screen bg-gray-900 text-white flex flex-col admin-dashboard-container overflow-auto">
       <AdminHeader />
-      <div className="flex-1 flex">
+      <div className="flex-1 flex flex-col md:flex-row">
         <AdminSidebar activeSection={activeSection} setActiveSection={setActiveSection} />
         <main className="flex-1 overflow-auto admin-main-content">
           {renderActiveSection()}
